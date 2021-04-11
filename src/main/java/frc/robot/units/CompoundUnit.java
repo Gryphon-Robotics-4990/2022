@@ -39,7 +39,7 @@ public class CompoundUnit implements Unit {
     public CompoundUnit(Unit[] numerators, Unit denominator) {
         this(numerators, new Unit[] {denominator});
     }
-
+    
     public CompoundUnit(Unit numerator, Unit denominator) {
         this(new Unit[] {numerator}, new Unit[] {denominator});
     }

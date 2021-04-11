@@ -1,7 +1,7 @@
 package frc.robot.units;
 
 public enum Dimension {
-    //Current,
+    Current,
     Angle,
     Mass,
     Length,
