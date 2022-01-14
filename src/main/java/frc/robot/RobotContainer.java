@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -20,6 +21,7 @@ public class RobotContainer {
 
     //Drivetrain
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
+    private final PIDTestDriveCommand m_PidTestDriveCommand = new PIDTestDriveCommand(m_drivetrain);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -37,6 +39,9 @@ public class RobotContainer {
             () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
             );
 
+        
+       joystickDrive.getButton(ButtonF310.A).toggleWhenPressed(m_PidTestDriveCommand);
+        
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
     }
 
