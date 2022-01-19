@@ -21,7 +21,7 @@ public class RobotContainer {
 
     //Drivetrain
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
-    private final PIDTestDriveCommand m_PidTestDriveCommand = new PIDTestDriveCommand(m_drivetrain);
+    private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -34,15 +34,17 @@ public class RobotContainer {
         //Configure control in the same order as the subsystems (alphabetical)
 
         //Drivetrain
-        m_teleopArcadeDriveCommand.setSuppliers(
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
-            );
+        // m_teleopArcadeDriveCommand.setSuppliers(
+        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
+        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+        //     );
 
         
-       joystickDrive.getButton(ButtonF310.A).toggleWhenPressed(m_PidTestDriveCommand);
+        m_FlywheelPrototypeTestCommand.setSupplier(
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        );
         
-        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
     }
 
     public Command getAutonomousCommand() {

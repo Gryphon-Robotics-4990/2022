@@ -61,17 +61,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
-        //System.out.println(getTargetRight());
         //TODO Add acceleration to feedforward?
         m_leftFrontTalon.set(ControlMode.Velocity, left, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(left));
         m_rightFrontTalon.set(ControlMode.Velocity, right, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(right));
-        //m_leftFrontTalon.set(ControlMode.PercentOutput, left);
-        //m_rightFrontTalon.set(ControlMode.PercentOutput, right);
     }
 
     public void drivePO(double left, double right) {
-        // m_leftTalon.set(ControlMode.PercentOutput, left);
-        // m_rightTalon.set(ControlMode.PercentOutput, right);
+        m_leftFrontTalon.set(ControlMode.PercentOutput, left);
+        m_rightFrontTalon.set(ControlMode.PercentOutput, right);
     }
 
     //Functions below are for 0-1
@@ -176,7 +173,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         //Setup talon built-in PID
         m_leftFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
+        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
 
         //Create config objects
