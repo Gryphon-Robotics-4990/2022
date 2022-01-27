@@ -69,7 +69,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drivePO(double left, double right) {
         m_leftFrontTalon.set(ControlMode.PercentOutput, left);
         m_rightFrontTalon.set(ControlMode.PercentOutput, right);
-        System.out.println(m_rightFrontTalon.getSupplyCurrent());
     }
 
     //Functions below are for 0-1
@@ -166,13 +165,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_leftFrontTalon.setSensorPhase(true);
         m_rightFrontTalon.setSensorPhase(true);
 
-        m_rightFrontTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
+        m_rightFrontTalon.setInverted(true);
         m_rightRearTalon.setInverted(true);
-
-        // So it won't catch on fire you're welcome
-        //m_rightFrontTalon.configPeakCurrentLimit(40);
-        //m_rightFrontTalon.enableCurrentLimit(true);
 
         m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
         m_rightRearTalon.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
