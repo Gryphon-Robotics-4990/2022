@@ -38,7 +38,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drivePO(double left, double right) {
         m_leftFrontTalon.set(ControlMode.PercentOutput, left);
         m_rightFrontTalon.set(ControlMode.PercentOutput, right);
-        System.out.println(m_rightFrontTalon.getSupplyCurrent());
+        //System.out.println(m_rightFrontTalon.getSupplyCurrent());
     }
 
     //Functions below are for 0-1

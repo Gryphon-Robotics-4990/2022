@@ -18,11 +18,13 @@ public class RobotContainer {
 
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
+    private final PreShooterSubsystem m_preShooter = new PreShooterSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
 
     //Drivetrain
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
-
+    private final PreShooterCommand m_preShooterCommand = new PreShooterCommand(m_preShooter);
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Configure all the control bindings
@@ -39,8 +41,8 @@ public class RobotContainer {
         //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         //     );
         joystickDrive.getButton(JoystickF310.ButtonF310.A).toggleWhenPressed(m_FlywheelPrototypeTestCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
-        
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_FlywheelPrototypeTestCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_preShooter, m_preShooterCommand);
     }
 
     public Command getAutonomousCommand() {
