@@ -31,10 +31,10 @@ public final class Constants {
         //CAN Bus IDs
         public static int CAN_PDP = 0;
         public static int CAN_PCM = 0;
-        public static int CAN_DRIVETRAIN_RIGHT_TALONSRX = -1;
-        public static int CAN_DRIVETRAIN_RIGHT_VICTORSPX = -1;
-        public static int CAN_DRIVETRAIN_LEFT_TALONSRX = -1;
-        public static int CAN_DRIVETRAIN_LEFT_VICTORSPX = -1;
+        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 8;
+        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 20;
+        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 9;
+        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 7;
         public static int CAN_SHOOTER_TALONSRX = -1;
         public static int CAN_SHOOTER_SLAVE_TALONSRX = -1;
         public static int CAN_SHOOTER_INSERTER_TALONSRX = -1;
@@ -43,7 +43,7 @@ public final class Constants {
     }
 
     public static class MotorConfig {
-        //Talon and Victor information
+        //Talon information
         public static double TALON_ENCODER_RESOLUTION = 4096; // = EPR = CPR
         public static int TALON_TIMEOUT_MS = 5;
         public static int TALON_DEFAULT_PID_ID = 0;//0 is primary, 1 is auxilary
@@ -55,6 +55,8 @@ public final class Constants {
         //TODO find robot physical characteristics
         public static double DRIVETRAIN_TRACKWIDTH = -1;
         public static double DRIVETRAIN_WHEEL_RADIUS = -1;
+        public static double DRIVETRAIN_WHEEL_RADIUS_METERS = -1;
+        public static double DRIVETRAIN_TRACKWIDTH_METERS = -1;
 
         public static double SHOOTER_HEIGHT_METERS = -1;
         public static double SHOOTER_ANGLE_RADIANS = -1;
@@ -99,38 +101,27 @@ public final class Constants {
         //TODO How to implement scalar multipliers and angular->velocity?
         
         //Old Code
-        //public static double ENCODER_VELOCITY_UNIT_TO_SECONDS = 0.1;//Encoder measures things in units per 0.1s
+        public static double ENCODER_VELOCITY_UNIT_TO_SECONDS = 0.1;//Encoder measures things in units per 0.1s
         public static double DRIVETRAIN_ENCODER_DISTANCE_TO_METERS = 1 / MotorConfig.TALON_ENCODER_RESOLUTION * 2 * Math.PI * RobotMeasurements.DRIVETRAIN_WHEEL_RADIUS_METERS;
         public static double DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND = DRIVETRAIN_ENCODER_DISTANCE_TO_METERS / ENCODER_VELOCITY_UNIT_TO_SECONDS;
         public static double METERS_PER_SECOND_TO_DRIVETRAIN_ENCODER_VELOCITY = 1 / DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
         public static double SHOOTER_ENCODER_VELOCITY_TO_METERS_PER_SECOND = 0;
-        public static double SPINNER_ENCODER_VELOCITY_TO_METERS_PER_SECOND = 0;
         //public static double DRIVETRAIN_FEEDFORWARD_TO_ENCODER_UNITS = 1;//TODO find this number
         //public static double SHOOTER_FEEDFORWARD_TO_ENCODER_UNITS = 1;//TODO find this number
     }
 
     public static class SubsystemConfig {
-        //Climb movement information
-        public static int CLIMB_TARGET_ENCODER_TICKS = 0;
-        public static int CLIMB_LOCK_MAXIMUM_ALLOWED_ERROR = 0;
-        public static int CLIMB_TIMEOUT_S = 5;
 
         //Drivetrain movement information
         public static double DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY = 3450;//Approx 4.03 meters per second
         public static double DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND = 3.95;//Max is ~4
-        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * Conversions.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
         public static double DRIVETRAIN_CLOSED_LOOP_RAMP = 0.1; //seconds from 0 to full or full to 0
 
         //Shooter movement information
         public static double SHOOTER_MAXIMUM_TESTED_ENCODER_VELOCITY = 5000;//TODO find this number
         public static double SHOOTER_MAXIMUM_ALLOWED_VELOCITY_ERROR = 50;//TODO find this number
         public static double SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES = 0.1;//TODO find this number
-
-        //Storage movement information
-        public static double STORAGE_MINIMUM_BALL_SPACING_ENCODER_UNITS = 50;//TODO find this number
-        public static double STORAGE_LENGTH_ENCODER_UNITS = 250;//TODO find this number
-        public static double STORAGE_UNJAM_REVERSE_TIME = 0.15;
-        public static double STORAGE_UNJAM_WAIT_TIME = 0.05;
     }
 
     public static class Vision {
@@ -145,10 +136,8 @@ public final class Constants {
     
     public static class MotionControl {
         //PID
-        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.5, 0, 0);
-        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.5, 0, 0);
-        public static TalonSRXGains SHOOTER_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains CLIMB_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 30);
+        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;
@@ -175,7 +164,7 @@ public final class Constants {
 
     //Miscellaneous
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
-    public static double JOYSTICK_INPUT_EXPONENT = 2;
+    public static double JOYSTICK_INPUT_EXPONENT = 5/3/*2*/;
 
     //Operation config
     //@Config(name = "Rotation Input Multiplier", tabName = "Op Configuration")
