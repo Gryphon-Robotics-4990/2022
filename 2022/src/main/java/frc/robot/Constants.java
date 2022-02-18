@@ -30,16 +30,15 @@ public final class Constants {
 
         //CAN Bus IDs
         public static int CAN_PDP = 0;
-        public static int CAN_PCM = 0;
+        // CAN values for Test Robot drivetrain
         public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 8;
         public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 20;
         public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 9;
         public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 7;
-        public static int CAN_SHOOTER_TALONSRX = -1;
-        public static int CAN_SHOOTER_SLAVE_TALONSRX = -1;
-        public static int CAN_SHOOTER_INSERTER_TALONSRX = -1;
-        public static int CAN_STORAGE_TALONSRX = -1;
-        public static int CAN_INTAKE_TALONSRX = -1;
+        //
+        public static int CAN_SHOOTER_TOP_TALONSRX = -1;
+        public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = -1;
+        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = -1;
     }
 
     public static class MotorConfig {
@@ -138,6 +137,8 @@ public final class Constants {
         //PID
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 30);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
+        public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0, 0, 0);
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;

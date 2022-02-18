@@ -6,35 +6,16 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DriveUtil;
 import frc.robot.vision.Limelight;
-import io.github.oblarg.oblog.Loggable;
-import io.github.oblarg.oblog.annotations.Config;
-import io.github.oblarg.oblog.annotations.Log;
-
 import static frc.robot.Constants.*;
-
-import java.util.function.DoubleSupplier;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
     private final WPI_TalonSRX m_leftFrontTalon, m_leftRearTalon, m_rightFrontTalon, m_rightRearTalon;
 
     //@Config.NumberSlider(name = "OBLOG_TEST SPEED MULT", defaultValue = 1.1, min = 0, max = 2)
-    private double m_speedMultiplier = 1.25;
-
-    private final AHRS m_gyro;
-    
-    private final DifferentialDriveKinematics m_kinematics;
-    private final DifferentialDriveOdometry m_odometry;
-    private boolean m_reversed;
-
-
     public DrivetrainSubsystem() {
         m_leftFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX);
         m_leftRearTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
@@ -43,20 +24,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         configureMotors();
 
-        m_gyro = new AHRS(Ports.SPI_PORT_GYRO);
-        m_gyro.reset();
-        
         m_leftFrontTalon.setSelectedSensorPosition(0);
         m_rightFrontTalon.setSelectedSensorPosition(0);
-
-        m_kinematics = new DifferentialDriveKinematics(RobotMeasurements.DRIVETRAIN_TRACKWIDTH_METERS);
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(m_gyro.getAngle()));
-    }
-
-    @Override
-    public void periodic() {
-        //Update odometry
-        m_odometry.update(Rotation2d.fromDegrees(m_gyro.getAngle()), getDistanceLeft(), getDistanceRight());
     }
 
     //Assumes left and right are in encoder units per 100ms
@@ -69,6 +38,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drivePO(double left, double right) {
         m_leftFrontTalon.set(ControlMode.PercentOutput, left);
         m_rightFrontTalon.set(ControlMode.PercentOutput, right);
+        System.out.println(m_rightFrontTalon.getSupplyCurrent());
     }
 
     //Functions below are for 0-1
@@ -95,14 +65,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES;
     }
 
-    public double getGyroRate() {
-        return m_gyro.getRate();
-    }
-
-    public double getGyroTilt() {//Figure out which one we're using
-        return Math.max(m_gyro.getPitch(), m_gyro.getRoll());
-    }
-
     public double getDistanceLeft() {
         return m_leftFrontTalon.getSelectedSensorPosition() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_DISTANCE_TO_METERS;
     }
@@ -117,9 +79,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double getRateRight() {
         return m_rightFrontTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    }
-    public void setMultiplier(double d) {
-        m_speedMultiplier = d;
     }
 
     //@Log
@@ -165,10 +124,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_leftFrontTalon.setSensorPhase(true);
         m_rightFrontTalon.setSensorPhase(true);
 
-        m_rightFrontTalon.setInverted(true);
+        m_rightFrontTalon.setInverted(false);
+        // Driving shooter prototype motors in different directions
         m_rightRearTalon.setInverted(true);
+        m_leftFrontTalon.setInverted(true);
 
-        m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        //m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
         m_rightRearTalon.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         //Setup talon built-in PID
