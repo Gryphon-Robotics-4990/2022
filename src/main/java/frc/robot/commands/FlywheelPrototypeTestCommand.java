@@ -4,6 +4,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class FlywheelPrototypeTestCommand extends CommandBase{
     private final DrivetrainSubsystem m_drivetrain;
+    // Set to 0.5 to test pre-shooter
     private double bottomSpeed = 0.5;
     private double topSpeed = 0.5;
 

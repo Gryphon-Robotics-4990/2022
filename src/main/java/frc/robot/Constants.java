@@ -30,10 +30,12 @@ public final class Constants {
 
         //CAN Bus IDs
         public static int CAN_PDP = 0;
-        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = -1;
-        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = -1;
-        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = -1;
-        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = -1;
+        // CAN values for Test Robot drivetrain
+        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 8;
+        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 20;
+        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 9;
+        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 7;
+        //
         public static int CAN_SHOOTER_TOP_TALONSRX = -1;
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = -1;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = -1;
