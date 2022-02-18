@@ -8,27 +8,27 @@ import static frc.robot.Constants.*;
 
 
 public class PreShooterSubsystem extends SubsystemBase {
-    private final WPI_TalonSRX m_talon;
+    private final WPI_TalonSRX m_preShooter;
 
     public PreShooterSubsystem() {
-        m_talon = new WPI_TalonSRX(Ports.CAN_PRESHOOTER_TALONSRX);
+        m_preShooter = new WPI_TalonSRX(Ports.CAN_PRESHOOTER_TALONSRX);
         
         configureMotors();
     }
 
-    public void preShootPO(double percentSpeed) {
-        m_talon.set(ControlMode.PercentOutput, percentSpeed);
+    public void setSpeed(double percentSpeed) {
+        m_preShooter.set(ControlMode.PercentOutput, percentSpeed);
     }
 
     private void configureMotors() {
         
         //First setup the talon with default settings
-        m_talon.configFactoryDefault();
+        m_preShooter.configFactoryDefault();
 
-        m_talon.setInverted(false);
+        m_preShooter.setInverted(false);
 
         //Brake mode so no coasting
-        m_talon.setNeutralMode(NeutralMode.Brake);
+        m_preShooter.setNeutralMode(NeutralMode.Brake);
     }
     
 }
