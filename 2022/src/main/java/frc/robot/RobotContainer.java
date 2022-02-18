@@ -18,10 +18,11 @@ public class RobotContainer {
 
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
-
-    //Drivetrain
+    private final DriveTrainSubsystem m_intake = new IntakeSubsystem();
+    //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
+    private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -38,10 +39,16 @@ public class RobotContainer {
         //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
         //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         //     );
-        joystickDrive.getButton(JoystickF310.ButtonF310.A).toggleWhenPressed(m_FlywheelPrototypeTestCommand);
-        // We don't want a default command, the command should be controlled by the joystick
-        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
+
         
+        m_FlywheelPrototypeTestCommand.setSupplier(
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        );
+
+        
+        //
+        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_intake, m_IntakeCommand);
     }
 
     public Command getAutonomousCommand() {

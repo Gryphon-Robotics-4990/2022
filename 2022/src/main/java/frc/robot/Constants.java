@@ -39,6 +39,9 @@ public final class Constants {
         public static int CAN_SHOOTER_TOP_TALONSRX = -1;
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = -1;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = -1;
+        //CAN values for Intake
+        public static int CAN_INTAKE_LEFT_TALONSRX = -1;
+        public static int CAN_INTAKE_RIGHT_TALONSRX = -1;
     }
 
     public static class MotorConfig {
