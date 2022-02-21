@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.vision.VisionController;
+import frc.robot.subsystems.TurretSubsystem;
 
 public class LimelightTurretAimCommand extends CommandBase {
 
@@ -15,8 +16,8 @@ public class LimelightTurretAimCommand extends CommandBase {
     @Override
     public void execute() {
         // TODO find necessary turret position using VisionController
-        double current = m_turret.getPosition();
-        double change = VisionController.TurretVision.getTurretPositionFromAngle()
+        double current = m_turret.getEncoderPosition();
+        double change = VisionController.TurretVision.getTurretPositionFromAngle();
         m_turret.setPosition(current + change);
     }
     

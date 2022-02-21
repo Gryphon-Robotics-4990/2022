@@ -16,12 +16,18 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     
     private final JoystickF310 joystickDrive = new JoystickF310(Ports.PORT_JOYSTICK_DRIVE);
+    private final JoystickF310 joystickOperator = new JoystickF310(Ports.PORT_JOYSTICK_OPERATOR);
 
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
-
+    private final IntakeSubsystem m_intake = new IntakeSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+    private final TurretSubsystem m_turret = new TurretSubsystem();
+    //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
-    private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
+    private final FlywheelPrototypeTestCommand m_flywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
+    private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intake);
+    private final TurretManualCommand m_turretManualCommand = new TurretManualCommand(m_turret);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -35,14 +41,24 @@ public class RobotContainer {
         //Configure control in the same order as the subsystems (alphabetical)
 
         //Drivetrain
-        // m_teleopArcadeDriveCommand.setSuppliers(
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
-        //     );
-        joystickDrive.getButton(JoystickF310.ButtonF310.A).toggleWhenPressed(m_FlywheelPrototypeTestCommand);
-        // We don't want a default command, the command should be controlled by the joystick
-        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
+        m_teleopArcadeDriveCommand.setSuppliers(
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+        );
+
         
+        // m_flywheelPrototypeTestCommand.setSupplier(
+        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        // );
+
+        m_turretManualCommand.setSupplier(
+            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+        );
+
+        
+        //
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_intake, m_intakeCommand);
     }
 
     public Command getAutonomousCommand() {

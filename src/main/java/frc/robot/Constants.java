@@ -39,6 +39,11 @@ public final class Constants {
         public static int CAN_SHOOTER_TOP_TALONSRX = -1;
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = -1;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = -1;
+        //CAN values for Intake
+        public static int CAN_INTAKE_LEFT_TALONSRX = -1;
+        public static int CAN_INTAKE_RIGHT_TALONSRX = -1;
+        //CAN values for Turret
+        public static int CAN_TURRET_TALONSRX = -1;
     }
 
     public static class MotorConfig {
@@ -56,6 +61,9 @@ public final class Constants {
         public static double DRIVETRAIN_WHEEL_RADIUS = -1;
         public static double DRIVETRAIN_WHEEL_RADIUS_METERS = -1;
         public static double DRIVETRAIN_TRACKWIDTH_METERS = -1;
+        public static double TURRET_MOTOR_REDUCTION = 700;
+        public static double TALON_ENCODER_RESOLUTION = 4096;
+        public static double TOTAL_TURRET_TALON_TICKS_REVOLOTION = TALON_ENCODER_RESOLUTION * TURRET_MOTOR_REDUCTION;
 
         public static double SHOOTER_HEIGHT_METERS = -1;
         public static double SHOOTER_ANGLE_RADIANS = -1;
@@ -122,6 +130,8 @@ public final class Constants {
         public static double SHOOTER_MAXIMUM_TESTED_ENCODER_VELOCITY = 5000;//TODO find this number
         public static double SHOOTER_MAXIMUM_ALLOWED_VELOCITY_ERROR = 50;//TODO find this number
         public static double SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES = 0.1;//TODO find this number
+        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 0;
+        public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 0;
     }
 
     public static class Vision {
@@ -136,16 +146,19 @@ public final class Constants {
     
     public static class MotionControl {
         //PID
-        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 30);
-        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
+        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains TURRET_PID = new TalonSRXGains(0, 0, 0);
+
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;
         public static double DRIVETRAIN_FEEDFORWARD_KS_UNITS = 1 / 12;
         public static SimpleMotorFeedforward DRIVETRAIN_FEEDFORWARD = new SimpleMotorFeedforward(0.843 * DRIVETRAIN_FEEDFORWARD_KS_UNITS, 0.362 * DRIVETRAIN_FEEDFORWARD_KV_UNITS, 0);
         public static SimpleMotorFeedforward SHOOTER_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
+        public static SimpleMotorFeedforward TURRET_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
 
         //The following two could possibly just be normal PID values
         public static TalonSRXGains LIMELIGHT_SHOOTER_PID = new TalonSRXGains(0, 0, 0);

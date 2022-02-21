@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
+import frc.robot.vision.Limelight;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -22,8 +23,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shootPID(double top, double bottom) {
-        m_topTalon.set(ControlMode.Velocity, top, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(top));
-        m_leftBottomTalon.set(ControlMode.Velocity, bottom, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(bottom));
+        m_topTalon.set(ControlMode.Velocity, top, DemandType.ArbitraryFeedForward, MotionControl.SHOOTER_FEEDFORWARD.calculate(top));
+        m_leftBottomTalon.set(ControlMode.Velocity, bottom, DemandType.ArbitraryFeedForward, MotionControl.SHOOTER_FEEDFORWARD.calculate(bottom));
     }
 
     public void shootPO(double top, double bottom) {
@@ -31,6 +32,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leftBottomTalon.set(ControlMode.PercentOutput, bottom);
     }
 
+    public Boolean isReady()
+    {
+        return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
+    }
 
     public double getRateTop() {
         return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
@@ -39,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public double getRateBottom() {
         return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
+
 
     //@Log
     public int getVelocityTop() {
@@ -82,32 +88,20 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topTalon.setSensorPhase(true);
         m_leftBottomTalon.setSensorPhase(true);
 
-        m_topTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
-        m_leftBottomTalon.setInverted(true);
+        m_topTalon.setInverted(true);
+        m_leftBottomTalon.setInverted(false);
         m_rightBottomTalon.setInverted(false);
 
         m_rightBottomTalon.follow(m_leftBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
-        //Setup talon built-in PID
         m_topTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         m_leftBottomTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
-
-        //Create config objects
         TalonSRXConfiguration cTop = new TalonSRXConfiguration(), cBottom = new TalonSRXConfiguration();
 
-        //Setup config objects with desired values
         cTop.slot0 = MotionControl.SHOOTER_TOP_PID;
         cBottom.slot0 = MotionControl.SHOOTER_LEFT_BOTTOM_PID;
 
-        //Not sure if the two below are strictly necessary
-        // How quickly to apply the power
-        //cLeft.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-        //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-
-        //Brake mode so no coasting
         m_topTalon.setNeutralMode(NeutralMode.Brake);
         m_leftBottomTalon.setNeutralMode(NeutralMode.Brake);
         m_rightBottomTalon.setNeutralMode(NeutralMode.Brake);
