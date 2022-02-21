@@ -35,14 +35,19 @@ public class ShooterSubsystem extends SubsystemBase {
     {
         return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
     }
+    
+    // **LOOK HERE**
+    //TO DO:
+    //Create constants for shooter encoder velocity to meters per second (top and bottom)
 
-    public double getRateTop() {
-        return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    }
+    // public double getRateTop() {
+    //     return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+    // }
 
-    public double getRateBottom() {
-        return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    }
+    // public double getRateBottom() {
+    //     return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+    // }
+
 
     //@Log
     public int getVelocityTop() {
@@ -86,32 +91,20 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topTalon.setSensorPhase(true);
         m_leftBottomTalon.setSensorPhase(true);
 
-        m_topTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
-        m_leftBottomTalon.setInverted(true);
+        m_topTalon.setInverted(true);
+        m_leftBottomTalon.setInverted(false);
         m_rightBottomTalon.setInverted(false);
 
         m_rightBottomTalon.follow(m_leftBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
-        //Setup talon built-in PID
         m_topTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         m_leftBottomTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
-
-        //Create config objects
         TalonSRXConfiguration cTop = new TalonSRXConfiguration(), cBottom = new TalonSRXConfiguration();
 
-        //Setup config objects with desired values
         cTop.slot0 = MotionControl.SHOOTER_TOP_PID;
         cBottom.slot0 = MotionControl.SHOOTER_LEFT_BOTTOM_PID;
 
-        //Not sure if the two below are strictly necessary
-        // How quickly to apply the power
-        //cLeft.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-        //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-
-        //Brake mode so no coasting
         m_topTalon.setNeutralMode(NeutralMode.Brake);
         m_leftBottomTalon.setNeutralMode(NeutralMode.Brake);
         m_rightBottomTalon.setNeutralMode(NeutralMode.Brake);
