@@ -22,8 +22,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shootPID(double top, double bottom) {
-        m_topTalon.set(ControlMode.Velocity, top, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(top));
-        m_leftBottomTalon.set(ControlMode.Velocity, bottom, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(bottom));
+        m_topTalon.set(ControlMode.Velocity, top, DemandType.ArbitraryFeedForward, MotionControl.SHOOTER_FEEDFORWARD.calculate(top));
+        m_leftBottomTalon.set(ControlMode.Velocity, bottom, DemandType.ArbitraryFeedForward, MotionControl.SHOOTER_FEEDFORWARD.calculate(bottom));
     }
 
     public void shootPO(double top, double bottom) {
@@ -31,6 +31,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leftBottomTalon.set(ControlMode.PercentOutput, bottom);
     }
 
+    public Boolean isReady()
+    {
+        return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
+    }
 
     public double getRateTop() {
         return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
