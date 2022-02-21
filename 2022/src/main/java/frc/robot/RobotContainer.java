@@ -18,7 +18,8 @@ public class RobotContainer {
 
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
-    private final DriveTrainSubsystem m_intake = new IntakeSubsystem();
+    private final IntakeSubsystem m_intake = new IntakeSubsystem();
+    private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
