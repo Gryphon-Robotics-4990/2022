@@ -17,9 +17,9 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         addRequirements(drivetrain);
     }
 
-    public void setSuppliers(DoubleSupplier left, DoubleSupplier right) {
-        m_speedSupplier = left;
-        m_rotationSupplier = right;
+    public void setSuppliers(DoubleSupplier speedSupplier, DoubleSupplier rotationSupplier) {
+        m_speedSupplier = speedSupplier;
+        m_rotationSupplier = rotationSupplier;
     }
 
     @Override
@@ -27,9 +27,8 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble() * ARCADE_SPEED_MULTIPLIER, m_rotationSupplier.getAsDouble() * ARCADE_ROTATION_MULTIPLIER);
         // Convert speeds to target speeds in meters per second, and then divide by hypothetical maximum movement speed
         // Proportion of max speed
-        double factor = 0.5/*SubsystemConfig.DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND / SubsystemConfig.DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND*/;
-        speeds[0] *= factor * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
-        speeds[1] *= factor * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
+        speeds[0] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
+        speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         if (speeds[0] != 0 && speeds[1] != 0) System.out.println(speeds[0] + " " + speeds[1]);
         m_drivetrain.driveRaw(speeds[0], speeds[1]);
     }
