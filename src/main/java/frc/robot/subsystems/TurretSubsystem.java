@@ -5,10 +5,8 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import frc.robot.DriveUtil;
-import frc.robot.vision.Limelight;
+import frc.robot.units.UnitDimensionException;
 import static frc.robot.Constants.*;
 
 public class TurretSubsystem extends SubsystemBase {
@@ -24,22 +22,31 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretTalon.setSelectedSensorPosition(0);
     }
 
-    //Assumes left and right are in encoder units per 100ms
-    public void driveRaw(double speed) {
-        m_turretTalon.set(ControlMode.Position, right, DemandType.ArbitraryFeedForward, MotionControl.TURRET_FEEDFORWARD.calculate(right));
+    public void setPosition(double position) {
+        m_turretTalon.set(ControlMode.Position, position);
     }
 
     public void drivePO(double speed) {
-        m_turretTalon.set(ControlMode.PercentOutput, right);
+        double factor = 0.5; // We want to limit rotation speed
+        speed *= factor;
+        m_turretTalon.set(ControlMode.PercentOutput, speed);
     }
 
     public boolean isReady() {
-        return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
+        return Math.abs(m_turretTalon.getClosedLoopError()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
     }
 
     public double getPositionDegrees() {
-        //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLOTION;
-        return Units.ENCODER_ANGLE.to(Units.DEGREE) * (RobotMeasurements.TURRET_MOTOR_REDUCTION * m_turretTalon.getSelectedSeonsorPosition);
+        //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLUTION;
+        double factor = 1;
+        try {
+            factor = Units.ENCODER_ANGLE.to(Units.DEGREE);
+        } catch (UnitDimensionException e) {}
+        return factor * (RobotMeasurements.TURRET_MOTOR_REDUCTION * m_turretTalon.getSelectedSensorPosition());
+    }
+
+    public double getEncoderPosition() {
+        return m_turretTalon.getSelectedSensorPosition();
     }
 
     public int getError() {
@@ -64,7 +71,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
         //Create config objects
-        TalonSRXConfiguration c = new TalonSRXConfiguration()
+        TalonSRXConfiguration c = new TalonSRXConfiguration();
 
         //Setup config objects with desired values
         c.slot0 = MotionControl.TURRET_PID;

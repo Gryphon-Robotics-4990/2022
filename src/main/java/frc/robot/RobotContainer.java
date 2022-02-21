@@ -16,6 +16,7 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     
     private final JoystickF310 joystickDrive = new JoystickF310(Ports.PORT_JOYSTICK_DRIVE);
+    private final JoystickF310 joystickOperator = new JoystickF310(Ports.PORT_JOYSTICK_OPERATOR);
 
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();

@@ -6,9 +6,9 @@ import static frc.robot.Constants.*;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX m_intakeTalon;
+    private final WPI_TalonSRX m_intakeLeft, m_intakeRight;
 
-    public DrivetrainSubsystem() {
+    public IntakeSubsystem() {
         m_intakeLeft = new WPI_TalonSRX(Ports.CAN_INTAKE_LEFT_TALONSRX);
         m_intakeRight = new WPI_TalonSRX(Ports.CAN_INTAKE_RIGHT_TALONSRX);
         configureMotors();
@@ -20,7 +20,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     private void configureMotors() {
-        m_intakeTalon.configFactoryDefault();
+        m_intakeLeft.configFactoryDefault();
+        m_intakeRight.configFactoryDefault();
 
         m_intakeLeft.setInverted(false);
         m_intakeRight.setInverted(true);
