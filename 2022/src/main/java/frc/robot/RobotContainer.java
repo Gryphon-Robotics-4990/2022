@@ -20,10 +20,12 @@ public class RobotContainer {
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+    private final TurretSubsystem m_turret = new TurretSubsystem();
     //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
     private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
+    private final TurretManualCommand m_TurretManualCommand = new TurretManualCommand(m_turret);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -42,8 +44,12 @@ public class RobotContainer {
         //     );
 
         
-        m_FlywheelPrototypeTestCommand.setSupplier(
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        // m_FlywheelPrototypeTestCommand.setSupplier(
+        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        // );
+
+        m_TurretManualCommand.setSupplier(
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         );
 
         
