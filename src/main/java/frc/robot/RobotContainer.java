@@ -23,9 +23,9 @@ public class RobotContainer {
     private final TurretSubsystem m_turret = new TurretSubsystem();
     //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
-    private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
-    private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_intake);
-    private final TurretManualCommand m_TurretManualCommand = new TurretManualCommand(m_turret);
+    private final FlywheelPrototypeTestCommand m_flywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
+    private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intake);
+    private final TurretManualCommand m_turretManualCommand = new TurretManualCommand(m_turret);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -44,18 +44,18 @@ public class RobotContainer {
         );
 
         
-        // m_FlywheelPrototypeTestCommand.setSupplier(
+        // m_flywheelPrototypeTestCommand.setSupplier(
         //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
         // );
 
-        m_TurretManualCommand.setSupplier(
+        m_turretManualCommand.setSupplier(
             () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         );
 
         
         //
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_intake, m_IntakeCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_intake, m_intakeCommand);
     }
 
     public Command getAutonomousCommand() {
