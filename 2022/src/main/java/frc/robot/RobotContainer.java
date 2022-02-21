@@ -38,10 +38,10 @@ public class RobotContainer {
         //Configure control in the same order as the subsystems (alphabetical)
 
         //Drivetrain
-        // m_teleopArcadeDriveCommand.setSuppliers(
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
-        //     );
+        m_teleopArcadeDriveCommand.setSuppliers(
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+        );
 
         
         // m_FlywheelPrototypeTestCommand.setSupplier(
@@ -54,7 +54,7 @@ public class RobotContainer {
 
         
         //
-        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, /*m_teleopArcadeDriveCommand*/m_FlywheelPrototypeTestCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_intake, m_IntakeCommand);
     }
 

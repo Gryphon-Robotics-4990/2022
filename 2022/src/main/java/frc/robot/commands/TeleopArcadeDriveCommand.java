@@ -17,9 +17,9 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         addRequirements(drivetrain);
     }
 
-    public void setSuppliers(DoubleSupplier left, DoubleSupplier right) {
-        m_speedSupplier = left;
-        m_rotationSupplier = right;
+    public void setSuppliers(DoubleSupplier speedSupplier, DoubleSupplier rotationSupplier) {
+        m_speedSupplier = speedSupplier;
+        m_rotationSupplier = rotationSupplier;
     }
 
     @Override
