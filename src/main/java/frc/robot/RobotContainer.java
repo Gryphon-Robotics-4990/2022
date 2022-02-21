@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.vision.VisionController;
 import frc.robot.JoystickF310.*;
 import frc.robot.DriveUtil.*;
 
@@ -31,6 +32,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure all the control bindings
         configureControlBindings();
+        VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
     }
 
     private void configureControlBindings() {

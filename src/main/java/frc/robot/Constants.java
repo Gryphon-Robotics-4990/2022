@@ -86,10 +86,11 @@ public final class Constants {
         
         Unit KILOGRAM = new BaseUnit(Dimension.Mass, 1d);
 
-        Unit RADIAN = new BaseUnit(Dimension.Angle, 1d);
-        Unit ROTATION = new BaseUnit(Dimension.Angle, RADIAN.getScalar() * 2d * Math.PI);
-        Unit DEGREE = new BaseUnit(Dimension.Angle, ROTATION.getScalar() / 360d);
-        Unit ENCODER_ANGLE = new BaseUnit(Dimension.Angle, ROTATION.getScalar() / MotorConfig.TALON_ENCODER_RESOLUTION);
+        public static Unit RADIAN = new BaseUnit(Dimension.Angle, 1d);
+        public static Unit REVOLUTION = new BaseUnit(Dimension.Angle, RADIAN.getScalar() * 2d * Math.PI);
+        public static Unit DEGREE = new BaseUnit(Dimension.Angle, REVOLUTION.getScalar() / 360d);
+        // Angle represented by encoder ticks, i.e 4096 ticks is a full revolution
+        public static Unit ENCODER_ANGLE = new BaseUnit(Dimension.Angle, REVOLUTION.getScalar() / MotorConfig.TALON_ENCODER_RESOLUTION);
 
         Unit AMPERE = new BaseUnit(Dimension.Current, 1d);
 
@@ -134,12 +135,12 @@ public final class Constants {
     }
 
     public static class Vision {
-        //TODO find these two
-        public static double TARGET_HEIGHT_METERS = 0;
-
+        //8 ft 8 in (freedom units) - 264 cm
+        public static double TARGET_HEIGHT_METERS = 2.64;
+        // The distance at which we need to switch to lobs (no top roller)
+        public static double LOB_THRESHOLD = 10;
         public static ControlPoint[] CONTROL_POINTS = {
-            new ControlPoint(0, 1),
-            new ControlPoint(1, 1)
+            //Add control points here
         };
     }
     
