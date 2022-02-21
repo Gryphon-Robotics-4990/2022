@@ -41,6 +41,9 @@ public class RobotContainer {
         //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         //     );
         joystickDrive.getButton(JoystickF310.ButtonF310.A).toggleWhenPressed(m_FlywheelPrototypeTestCommand);
+
+        //Just added a button to toggle pre shooter command
+        joystickOperator.getButton(JoystickF310.ButtonF310.A).toggleWhenPressed(m_preShooterCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_FlywheelPrototypeTestCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_preShooter, m_preShooterCommand);
     }
