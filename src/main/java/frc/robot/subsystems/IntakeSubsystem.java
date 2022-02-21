@@ -15,8 +15,6 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeLeft = new WPI_TalonSRX(Ports.CAN_INTAKE_LEFT_TALONSRX);
         m_intakeRight = new WPI_TalonSRX(Ports.CAN_INTAKE_RIGHT_TALONSRX);
         configureMotors();
-        m_intakeLeft.setSelectedSensorPosition(0);
-        m_intakeRight.setSelectedSensorPosition(0);
     }
 
     public void setSpeed(double leftSpeed, double rightSpeed) {

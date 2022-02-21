@@ -36,17 +36,13 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
     }
 
-    // ***LOOK HERE***
-    //TO DO:
-    //Create constants for shooter encoder velocity to meters per second (top and bottom)
+    public double getRateTop() {
+        return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+    }
 
-    // public double getRateTop() {
-    //     return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    // }
-
-    // public double getRateBottom() {
-    //     return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    // }
+    public double getRateBottom() {
+        return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+    }
 
 
     //@Log

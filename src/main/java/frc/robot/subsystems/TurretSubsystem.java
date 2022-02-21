@@ -38,7 +38,8 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double getPositionDegrees() {
-        return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLOTION;
+        //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLOTION;
+        return Units.ENCODER_ANGLE.to(Units.DEGREE) * (RobotMeasurements.TURRET_MOTOR_REDUCTION * m_turretTalon.getSelectedSeonsorPosition);
     }
 
     public int getError() {
