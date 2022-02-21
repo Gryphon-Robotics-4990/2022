@@ -49,7 +49,7 @@ public class RobotContainer {
         // );
 
         m_TurretManualCommand.setSupplier(
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         );
 
         

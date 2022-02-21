@@ -19,8 +19,8 @@ public class TurretManualCommand extends CommandBase{
     //set motor speeds
     @Override
     public void execute() {
-        double speed = 0;
-        m_turret.drivePO(m_speedSupplier.getAsDouble());
+        double driveSpeed = m_speedSupplier.getAsDouble();
+        m_turret.drivePO(driveSpeed);
     }
 
 }
