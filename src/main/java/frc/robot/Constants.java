@@ -124,12 +124,11 @@ public final class Constants {
     }
 
     public static class Vision {
-        //TODO find these two
-        public static double TARGET_HEIGHT_METERS = 0;
+        //8 ft 8 in (freedom units) - 264 cm
+        public static double TARGET_HEIGHT_METERS = 2.64;
 
         public static ControlPoint[] CONTROL_POINTS = {
-            new ControlPoint(0, 1),
-            new ControlPoint(1, 1)
+            //Add control points here
         };
     }
     
