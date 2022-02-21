@@ -145,8 +145,8 @@ public final class Constants {
     
     public static class MotionControl {
         //PID
-        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 30);
-        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
+        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains TURRET_PID = new TalonSRXGains(0, 0, 0);
