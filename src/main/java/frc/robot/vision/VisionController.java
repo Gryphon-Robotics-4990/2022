@@ -13,10 +13,14 @@ import edu.wpi.first.wpilibj.util.Units;
 
 public class VisionController {
 
+    // 2D array of control points, with multiple "buckets" 
+    // corresponding to a set of control points
     private static ControlPoint[][] controlPoints;
+    // The interval of distance in each bucket, used to configure how
+    // we interpolate based on the control points
+    private static final int distancePerBucket = 2;
 
     public static void setControlPoints(ControlPoint[] points) {
-        int distancePerBucket = 2; // The interval of distance in each bucket
         // Assumes they are sorted in increasing order by distance
         int bucketCounter = 0;
         double startDistance = points[0].getDistance(); // should probably start at 0
@@ -34,31 +38,39 @@ public class VisionController {
         }
     }
 
-    public static double getShooterSpeedFromDistance(double dist) {
-        int distancePerBucket = 2; // Repeat of value in setControlPoints()
-        //Try to interpolate.
+    private static double[] getShooterSpeedsFromDistance(double dist) {
         int closestBucket = (int)Math.floor(dist / distancePerBucket);
+        if (closestBucket > controlPoints.length - 1) {
+            //Input distance is out of range, so can't interpolate shooter speed
+            System.err.println("[ERROR] Couldn't interpolate shooter speed, distance out of range.");
+            return new double[]{0.0, 0.0};
+        }
         ControlPoint last = new ControlPoint(0, 0);
         for (ControlPoint p : controlPoints[closestBucket]){
-            if (p.getDistance() == dist){
-                return p.getSpeed();
+            if (p.getDistance() == dist) {
+                // We don't want top roller if it's a lob
+                double topSpeed = isLob(dist) ? 0.0 : 0.5;
+                return new double[]{topSpeed, p.getSpeed()};
             }
             if (p.getDistance() > dist) {
-                double speed = LinearInterpolate.interpolate(last, p, dist);
-                return speed;
+                double bottomSpeed = LinearInterpolate.interpolate(last, p, dist);
+                double topSpeed = isLob(dist) ? 0.0 : 0.5;
+                return new double[]{topSpeed, bottomSpeed};
             }
             last = p;
-
         }
-        
-
-        //If we couldn't interpolate, it means that the distance isn't in the correct range.
-        System.err.println("[ERROR] Couldn't interpolate shooter speed, distance out of range.");
-        return 0;
+        System.err.println("[ERROR] Couldn't interpolate shooter speed");
+        return new double[]{0.0, 0.0};
     }
 
-    public static double getShooterSpeedFromLimelight() {
-        return getShooterSpeedFromDistance(findDistanceToTarget());
+    // TODO figure out better way to transition over lob threshold
+    private static boolean isLob(double dist) {
+        return dist <= Vision.LOB_THRESHOLD;
+    } 
+
+    // Returns top speed, bottom speed
+    public static double[] getShooterSpeedFromLimelight() {
+        return getShooterSpeedsFromDistance(findDistanceToTarget());
     }
 
     // http://docs.limelightvision.io/en/latest/cs_estimating_distance.html
@@ -76,6 +88,7 @@ public class VisionController {
             double x1 = p1.getX();
             double y1 = p1.getY();
             double m = (p2.getY() - p1.getY()) / (p2.getX() - p1.getX());
+            // Creating function of line using point-slope form
             Function<Double, Double> f = (Double x) -> (m * (x - x1) + y1);
             double result = f.apply(dist);
             return result;

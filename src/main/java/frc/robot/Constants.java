@@ -126,7 +126,8 @@ public final class Constants {
     public static class Vision {
         //8 ft 8 in (freedom units) - 264 cm
         public static double TARGET_HEIGHT_METERS = 2.64;
-
+        // The distance at which we need to switch to lobs (no top roller)
+        public static double LOB_THRESHOLD = 10;
         public static ControlPoint[] CONTROL_POINTS = {
             //Add control points here
         };
