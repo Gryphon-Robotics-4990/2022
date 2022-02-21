@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.vision.VisionController;
 import frc.robot.JoystickF310.*;
 import frc.robot.DriveUtil.*;
 
@@ -19,7 +20,6 @@ public class RobotContainer {
     // Create subsystems
     private final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
 
-    //Drivetrain
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     private final FlywheelPrototypeTestCommand m_FlywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
 
@@ -27,6 +27,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure all the control bindings
         configureControlBindings();
+        VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
     }
 
     private void configureControlBindings() {
