@@ -1,14 +1,13 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.vision.VisionController;
+import io.github.oblarg.oblog.Logger;
 import frc.robot.JoystickF310.*;
-import frc.robot.DriveUtil.*;
 
 import static frc.robot.Constants.*;
 
@@ -37,6 +36,7 @@ public class RobotContainer {
         // Configure all the control bindings
         configureControlBindings();
         VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
+        Logger.configureLoggingAndConfig(this, false);
     }
 
     private void configureControlBindings() {
@@ -48,10 +48,7 @@ public class RobotContainer {
             () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
             () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
         );
-        
-        // m_flywheelPrototypeTestCommand.setSupplier(
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
-        // );
+
 
         m_turretManualCommand.setSupplier(
             () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
@@ -68,6 +65,10 @@ public class RobotContainer {
         CommandScheduler.getInstance().setDefaultCommand(m_intake, m_intakeCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_limelightShooterCommand);
+    }
+
+    public void updateLoggerEntries() {
+        Logger.updateEntries();
     }
 
     public Command getAutonomousCommand() {
