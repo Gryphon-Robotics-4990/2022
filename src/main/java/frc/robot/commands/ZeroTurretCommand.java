@@ -1,17 +1,13 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class ZeroTurretCommand extends CommandBase{
-    private final TurretSubsystem m_turret;
+// This is just an instant command but we gave it its own file
+public class ZeroTurretCommand extends InstantCommand {
 
     public ZeroTurretCommand(TurretSubsystem turret) {
-        m_turret = turret;
-        addRequirements(turret);
+        super(() -> turret.setPosition(0), turret);
     }
-    @Override
-    public void execute() {
-        m_turret.setPosition(0);
-    }
+
 }
