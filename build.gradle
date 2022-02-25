@@ -53,7 +53,7 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     testImplementation 'junit:junit:4.12'
-    implementation "com.github.Oblarg.Oblog:lib:3.1.2"
+    implementation "com.github.Oblarg:Oblog:4.0.9"
 
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
