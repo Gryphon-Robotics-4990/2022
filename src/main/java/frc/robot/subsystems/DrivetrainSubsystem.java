@@ -120,21 +120,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightRearVictor.configFactoryDefault();
 
         
-        //Left side encoder goes in the wrong direction
+        // TODO figure out whether we need to switch the encoder direction
         m_leftFrontTalon.setSensorPhase(true);
         m_rightFrontTalon.setSensorPhase(true);
 
         m_rightFrontTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
-        m_rightRearVictor.setInverted(true);
-        m_leftFrontTalon.setInverted(true);
+        m_rightRearVictor.setInverted(false);
+        
 
-        //m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        m_leftRearVictor.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
         m_rightRearVictor.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         //Setup talon built-in PID
         m_leftFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
+        m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
 
         //Create config objects
