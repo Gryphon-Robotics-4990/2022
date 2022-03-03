@@ -142,6 +142,12 @@ public final class Constants {
         public static double LOB_THRESHOLD = 10;
         public static ControlPoint[] CONTROL_POINTS = {
             //Add control points here
+
+            // Dummy control points to be able to test code
+            new ControlPoint(0, 0),
+            new ControlPoint(3, 4),
+            new ControlPoint(5, 2),
+            new ControlPoint(7, 9),
         };
     }
     
