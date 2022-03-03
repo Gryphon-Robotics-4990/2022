@@ -84,9 +84,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     @Log(name = "Drivetrain Ready")
     public boolean drivetrainReady() {
-        return getRateLeft() < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && getRateRight() < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
+        return Math.abs(getRateLeft()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && Math.abs(getRateRight()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
     }
-
 
     //@Log
     public int getVelocityRight() {
