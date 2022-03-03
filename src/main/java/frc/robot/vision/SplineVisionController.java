@@ -5,6 +5,9 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.math.util.Units;
 
 
+/* Old vision code, keeping here as a reference/fallback in case 
+    our vision code doesn't work*/
+
 // https://www.wired.com/2012/01/projectile-motion-primer-for-first-robotics/
 // http://docs.limelightvision.io/en/latest/cs_aimandrange.html
 
