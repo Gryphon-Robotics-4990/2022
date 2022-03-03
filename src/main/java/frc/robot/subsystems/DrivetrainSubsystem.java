@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DriveUtil;
 import frc.robot.vision.Limelight;
 import static frc.robot.Constants.*;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
@@ -80,6 +81,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public double getRateRight() {
         return m_rightFrontTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
+
+    @Log(name = "Drivetrain Ready")
+    public boolean drivetrainReady() {
+        return getRateLeft() < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && getRateRight() < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
+    }
+
 
     //@Log
     public int getVelocityRight() {

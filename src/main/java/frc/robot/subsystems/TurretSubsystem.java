@@ -37,6 +37,11 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(m_turretTalon.getClosedLoopError()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
     }
 
+    @Log
+    public boolean isTurretManual() {
+        return false;
+    }
+
     @Log.Gyro(name = "Turret Position", startingAngle = 0)
     public double getPositionDegrees() {
         //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLUTION;
