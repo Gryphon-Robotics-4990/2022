@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 import frc.robot.vision.Limelight;
+import io.github.oblarg.oblog.annotations.Log;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -32,23 +33,18 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leftBottomTalon.set(ControlMode.PercentOutput, bottom);
     }
 
-    public Boolean isReady()
-    {
+    @Log(name = "Shooter Ready")
+    public Boolean isReady() {
         return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
     }
 
-    public double getRateTop() {
-        return m_topTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+    @Log
+    public boolean isTopRunning() {
+        return m_topTalon.getMotorOutputPercent() > 0.0;
     }
 
     public double getRateBottom() {
         return m_leftBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
-    }
-
-
-    //@Log
-    public int getVelocityTop() {
-        return (int)m_topTalon.getSelectedSensorVelocity();
     }
 
     //@Log
@@ -57,21 +53,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     //@Log
-    public int getErrorTop() {
-        return (int)m_topTalon.getClosedLoopError();
-    }
-
-    //@Log
     public int getErrorBottom() {
         return (int)m_leftBottomTalon.getClosedLoopError();
     }
 
-    //@Log
-    public double getTargetTop() {
-        return m_topTalon.getControlMode() == ControlMode.Velocity ? m_topTalon.getClosedLoopTarget() : 0;
-    }
-
-    //@Log
+    @Log
     public double getTargetBottom() {
         return m_leftBottomTalon.getControlMode() == ControlMode.Velocity ? m_leftBottomTalon.getClosedLoopTarget() : 0;
     }
