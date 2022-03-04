@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.TurretManualCommand;
 import frc.robot.units.UnitDimensionException;
 import io.github.oblarg.oblog.annotations.Log;
 
@@ -35,6 +36,11 @@ public class TurretSubsystem extends SubsystemBase {
     @Log(name = "Turret Ready")
     public boolean isReady() {
         return Math.abs(m_turretTalon.getClosedLoopError()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
+    }
+
+    @Log(name = "Turret Manual")
+    public boolean isTurretManual() {
+        return this.getCurrentCommand().getClass() == TurretManualCommand.class;
     }
 
     @Log.Gyro(name = "Turret Position", startingAngle = 0)
