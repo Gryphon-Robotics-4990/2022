@@ -38,7 +38,7 @@ public class TurretSubsystem extends SubsystemBase {
         return Math.abs(m_turretTalon.getClosedLoopError()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
     }
 
-    @Log
+    @Log(name = "Turret Manual")
     public boolean isTurretManual() {
         return this.getCurrentCommand().getClass() == TurretManualCommand.class;
     }
