@@ -29,7 +29,7 @@ public class VisionController {
     public static class ShooterVision {
         // 2D array of control points, with multiple "buckets" 
         // corresponding to a set of control points
-        private static ControlPoint[][] controlPoints;
+        private static ControlPoint[][] controlPoints = new ControlPoint[5][5];
         // The interval of distance in each bucket, used to configure how
         // we interpolate based on the control points
         private static final int distancePerBucket = 2;

@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.vision.*;
 import frc.robot.units.*;
 
@@ -125,6 +125,7 @@ public final class Constants {
         public static double DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND = 3.95;//Max is ~4
         public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
         public static double DRIVETRAIN_CLOSED_LOOP_RAMP = 0.1; //seconds from 0 to full or full to 0
+        public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
         //Shooter movement information
         public static double SHOOTER_MAXIMUM_TESTED_ENCODER_VELOCITY = 5000;//TODO find this number
@@ -141,6 +142,12 @@ public final class Constants {
         public static double LOB_THRESHOLD = 10;
         public static ControlPoint[] CONTROL_POINTS = {
             //Add control points here
+
+            // Dummy control points to be able to test code
+            new ControlPoint(0, 0),
+            new ControlPoint(3, 4),
+            new ControlPoint(5, 2),
+            new ControlPoint(7, 9),
         };
     }
     

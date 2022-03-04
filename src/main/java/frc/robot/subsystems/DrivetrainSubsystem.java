@@ -1,26 +1,27 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DriveUtil;
 import frc.robot.vision.Limelight;
 import static frc.robot.Constants.*;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX m_leftFrontTalon, m_leftRearTalon, m_rightFrontTalon, m_rightRearTalon;
+    private final WPI_TalonSRX m_leftFrontTalon, m_rightFrontTalon;
+    private final WPI_VictorSPX m_leftRearVictor, m_rightRearVictor;
 
     //@Config.NumberSlider(name = "OBLOG_TEST SPEED MULT", defaultValue = 1.1, min = 0, max = 2)
     public DrivetrainSubsystem() {
         m_leftFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX);
-        m_leftRearTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
+        m_leftRearVictor = new WPI_VictorSPX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
         m_rightFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX);
-        m_rightRearTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX);
+        m_rightRearVictor = new WPI_VictorSPX(Ports.CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX);
 
         configureMotors();
 
@@ -31,8 +32,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
         //TODO Add acceleration to feedforward?
-        m_leftFrontTalon.set(ControlMode.Velocity, left, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(left));
-        m_rightFrontTalon.set(ControlMode.Velocity, right, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(right));
+        m_leftFrontTalon.set(ControlMode.Velocity, left);
+        m_rightFrontTalon.set(ControlMode.Velocity, right);
     }
 
     public void drivePO(double left, double right) {
@@ -81,6 +82,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_rightFrontTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
 
+    @Log(name = "Drivetrain Ready")
+    public boolean drivetrainReady() {
+        return Math.abs(getRateLeft()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && Math.abs(getRateRight()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
+    }
+
     //@Log
     public int getVelocityRight() {
         return (int)m_rightFrontTalon.getSelectedSensorVelocity();
@@ -115,26 +121,25 @@ public class DrivetrainSubsystem extends SubsystemBase {
         
         //First setup talons with default settings
         m_leftFrontTalon.configFactoryDefault();
-        m_leftRearTalon.configFactoryDefault();
+        m_leftRearVictor.configFactoryDefault();
         m_rightFrontTalon.configFactoryDefault();
-        m_rightRearTalon.configFactoryDefault();
+        m_rightRearVictor.configFactoryDefault();
 
         
-        //Left side encoder goes in the wrong direction
+        // TODO figure out whether we need to switch the encoder direction
         m_leftFrontTalon.setSensorPhase(true);
         m_rightFrontTalon.setSensorPhase(true);
 
         m_rightFrontTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
-        m_rightRearTalon.setInverted(true);
-        m_leftFrontTalon.setInverted(true);
+        m_rightRearVictor.setInverted(false);
+        
 
-        //m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
-        m_rightRearTalon.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        m_leftRearVictor.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        m_rightRearVictor.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         //Setup talon built-in PID
         m_leftFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
+        m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
 
         //Create config objects
@@ -151,9 +156,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         //Brake mode so no coasting
         m_leftFrontTalon.setNeutralMode(NeutralMode.Brake);
-        m_leftRearTalon.setNeutralMode(NeutralMode.Brake);
+        m_leftRearVictor.setNeutralMode(NeutralMode.Brake);
         m_rightFrontTalon.setNeutralMode(NeutralMode.Brake);
-        m_rightRearTalon.setNeutralMode(NeutralMode.Brake);
+        m_rightRearVictor.setNeutralMode(NeutralMode.Brake);
 
         //Configure talons
         m_leftFrontTalon.configAllSettings(cLeft);
