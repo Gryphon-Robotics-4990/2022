@@ -23,27 +23,21 @@ public final class Constants {
         //public static int PWM_NAME = -1;
 
         //Solenoid PCM ports
-        public static int PCM_INTAKE_FORWARD = -1;
-        public static int PCM_INTAKE_REVERSE = -1;
-        public static int PCM_SHOOTER_FORWARD = -1;
-        public static int PCM_SHOOTER_REVERSE = -1;
+        // public static int PCM_INTAKE_FORWARD = -1;
+        // public static int PCM_INTAKE_REVERSE = -1;
+        // public static int PCM_SHOOTER_FORWARD = -1;
+        // public static int PCM_SHOOTER_REVERSE = -1;
 
         //CAN Bus IDs
         public static int CAN_PDP = 0;
-        // CAN values for Test Robot drivetrain
-        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 8;
-        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 20;
-        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 9;
-        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 7;
-        //
-        public static int CAN_SHOOTER_TOP_TALONSRX = -1;
-        public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = -1;
-        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = -1;
-        //CAN values for Intake
-        public static int CAN_INTAKE_LEFT_TALONSRX = -1;
-        public static int CAN_INTAKE_RIGHT_TALONSRX = -1;
-        //CAN values for Turret
-        public static int CAN_TURRET_TALONSRX = -1;
+        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 1;
+        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 2;
+        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 3;
+        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 4;
+        public static int CAN_SHOOTER_TOP_TALONSRX = 23;
+        public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
+        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 10;
+        public static int CAN_PRESHOOTER_TALONSRX = 7;
     }
 
     public static class MotorConfig {
