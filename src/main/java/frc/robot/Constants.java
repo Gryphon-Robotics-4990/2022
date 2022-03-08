@@ -22,21 +22,21 @@ public final class Constants {
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
 
-        //Solenoid PCM ports
-        // public static int PCM_INTAKE_FORWARD = -1;
-        // public static int PCM_INTAKE_REVERSE = -1;
-        // public static int PCM_SHOOTER_FORWARD = -1;
-        // public static int PCM_SHOOTER_REVERSE = -1;
-
         //CAN Bus IDs
         public static int CAN_PDP = 0;
-        // CAN values for Test Robot drivetrain
-        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 8;
-        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 20;
-        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 9;
-        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 7;
+        // CAN values for drivetrain
+        public static int CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX = 1;
+        public static int CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX = 2;
+        public static int CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX = 3;
+        public static int CAN_DRIVETRAIN_LEFT_REAR_TALONSRX = 4;
+
+        public static int CAN_TURRET_TALONSRX = 6;
+
+        public static int CAN_INTAKE_RIGHT_TALONSRX = 8;
+        public static int CAN_INTAKE_LEFT_TALONSRX = 5;
+
         //
-        public static int CAN_SHOOTER_TOP_TALONSRX = -1;
+        public static int CAN_SHOOTER_TOP_TALONSRX = 23;
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 10;
     }
@@ -151,8 +151,8 @@ public final class Constants {
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0, 0, 0);
         public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains TURRET_PID = new TalonSRXGains(0, 0, 0);
+        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(1, 0, 0);
+        public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0, 0);
 
 
         //Feedforward

@@ -35,7 +35,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure all the control bindings
         configureControlBindings();
-        VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
+        //VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
         Logger.configureLoggingAndConfig(this, false);
     }
 
@@ -64,7 +64,8 @@ public class RobotContainer {
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_intake, m_intakeCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_limelightShooterCommand);
+        // Comment out command while PID testing shooter
+        //CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_limelightShooterCommand);
     }
 
     public void updateLoggerEntries() {

@@ -15,17 +15,18 @@ public class ShooterSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_topTalon, m_rightBottomTalon, m_leftBottomTalon;
 
     public ShooterSubsystem() {
-        //The top and left bottom talons use their own PID, but the bottom right just follows the bottom left.
+        //The top and left bottom talons use their own PID, but the bottom left just follows the bottom right.
         m_topTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_TOP_TALONSRX);
-        m_rightBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_LEFT_BOTTOM_TALONSRX);
-        m_leftBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX);
+        m_rightBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX);
+        m_leftBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_LEFT_BOTTOM_TALONSRX);
 
         configureMotors();
+        m_rightBottomTalon.setSelectedSensorPosition(0);
     }
 
     public void shootPID(double top, double bottom) {
-        m_topTalon.set(ControlMode.Velocity, top, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(top));
-        m_rightBottomTalon.set(ControlMode.Velocity, bottom, DemandType.ArbitraryFeedForward, MotionControl.DRIVETRAIN_FEEDFORWARD.calculate(bottom));
+        m_topTalon.set(ControlMode.Velocity, top);
+        m_rightBottomTalon.set(ControlMode.Velocity, bottom);
     }
 
     public void shootPO(double top, double bottom) {
@@ -75,15 +76,14 @@ public class ShooterSubsystem extends SubsystemBase {
         m_rightBottomTalon.setSensorPhase(true);
 
         m_topTalon.setInverted(false);
-        // Driving shooter prototype motors in different directions
-        m_rightBottomTalon.setInverted(false);
+        // Driving shooter motors in different directions
+       // m_rightBottomTalon.setInverted(false);
         m_leftBottomTalon.setInverted(true);
 
         m_leftBottomTalon.follow(m_rightBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         m_topTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         m_rightBottomTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
-        //m_rightFrontTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
         TalonSRXConfiguration cTop = new TalonSRXConfiguration(), cBottom = new TalonSRXConfiguration();
 
