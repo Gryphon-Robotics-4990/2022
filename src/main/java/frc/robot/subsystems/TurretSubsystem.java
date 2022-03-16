@@ -76,7 +76,7 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretTalon.setSensorPhase(true);
 
         // Do we need Motor inversion?
-        m_turretTalon.setInverted(false);
+        m_turretTalon.setInverted(true);
 
         // Setup talon built-in PID
         m_turretTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);

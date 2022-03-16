@@ -130,8 +130,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_leftFrontTalon.setSensorPhase(true);
         m_rightFrontTalon.setSensorPhase(true);
 
-        m_rightFrontTalon.setInverted(false);
-        m_rightRearVictor.setInverted(false);
+        m_rightFrontTalon.setInverted(true);
+        m_rightRearVictor.setInverted(true);
         
 
         m_leftRearVictor.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);

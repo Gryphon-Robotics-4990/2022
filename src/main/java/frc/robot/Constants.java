@@ -4,21 +4,20 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.vision.*;
 import frc.robot.units.*;
 
 
 public final class Constants {
-    //TODO replace -1 ports with actual port numbers
     public static class Ports {
         //Laptop ports
         public static int PORT_JOYSTICK_DRIVE = 0;
         public static int PORT_JOYSTICK_OPERATOR = 1;
 
         //RoboRIO sensor ports
-        public static SPI.Port SPI_PORT_GYRO = SPI.Port.kMXP;
+        //TODO wire breakbeam
+        //public static int DIO_BREAKBEAM = -1;
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
 
@@ -33,8 +32,7 @@ public final class Constants {
         public static int CAN_TURRET_TALONSRX = 6;
 
         public static int CAN_INTAKE_RIGHT_TALONSRX = 8;
-        public static int CAN_INTAKE_LEFT_TALONSRX = 5;
-
+        public static int CAN_PRESHOOTER_TALONSRX = 7;
         //
         public static int CAN_SHOOTER_TOP_TALONSRX = 23;
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
@@ -148,12 +146,11 @@ public final class Constants {
     
     public static class MotionControl {
         //PID
-        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(1, 0, 0);
-        public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0, 0);
-
+        public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 12);
+        public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
+        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0.2, 0.001, 6);
+        public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00035, 5);
+        public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0,0,0);
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;
@@ -161,24 +158,8 @@ public final class Constants {
         public static SimpleMotorFeedforward DRIVETRAIN_FEEDFORWARD = new SimpleMotorFeedforward(0.843 * DRIVETRAIN_FEEDFORWARD_KS_UNITS, 0.362 * DRIVETRAIN_FEEDFORWARD_KV_UNITS, 0);
         public static SimpleMotorFeedforward SHOOTER_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
         public static SimpleMotorFeedforward TURRET_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
-
-        //The following two could possibly just be normal PID values
-        public static TalonSRXGains LIMELIGHT_SHOOTER_PID = new TalonSRXGains(0, 0, 0);
-        public static TalonSRXGains LIMELIGHT_DRIVETRAIN_PID = new TalonSRXGains(0, 0, 0);
-
-        public static double LIMELIGHT_SHOOTER_KP = 0.5;
-        public static double LIMELIGHT_SHOOTER_KI = 0;
-        public static double LIMELIGHT_SHOOTER_KD = 0;
-
-        public static double LIMELIGHT_DRIVETRAIN_KP = 0.5;
-        public static double LIMELIGHT_DRIVETRAIN_KI = 0;
-        public static double LIMELIGHT_DRIVETRAIN_KD = 0;
-
-        public static double CLIMB_BALANCE_KP = 0.5;
-        public static double CLIMB_BALANCE_KI = 0;
-        public static double CLIMB_BALANCE_KD = 0;
     }
-
+ 
     //Miscellaneous
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
     public static double JOYSTICK_INPUT_EXPONENT = 5/3/*2*/;

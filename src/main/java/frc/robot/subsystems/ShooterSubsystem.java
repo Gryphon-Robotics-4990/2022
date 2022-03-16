@@ -27,11 +27,13 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shootPID(double top, double bottom) {
         m_topTalon.set(ControlMode.Velocity, top);
         m_rightBottomTalon.set(ControlMode.Velocity, bottom);
+        System.out.println(m_rightBottomTalon.getSelectedSensorVelocity());
     }
 
     public void shootPO(double top, double bottom) {
         m_topTalon.set(ControlMode.PercentOutput, top);
         m_rightBottomTalon.set(ControlMode.PercentOutput, bottom);
+        System.out.printf("Left: %f, Right: %f\n", m_leftBottomTalon.getSupplyCurrent(), m_rightBottomTalon.getSupplyCurrent());
     }
 
     @Log(name = "Shooter Ready")
@@ -71,9 +73,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_leftBottomTalon.configFactoryDefault();
 
         
-        //Left side encoder goes in the wrong direction
-        m_topTalon.setSensorPhase(true);
-        m_rightBottomTalon.setSensorPhase(true);
+        m_rightBottomTalon.setSensorPhase(false);
 
         m_topTalon.setInverted(false);
         // Driving shooter motors in different directions

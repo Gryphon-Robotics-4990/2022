@@ -1,6 +1,9 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.vision.Limelight;
 import frc.robot.vision.VisionController;
 import frc.robot.subsystems.TurretSubsystem;
 
@@ -16,9 +19,13 @@ public class LimelightTurretAimCommand extends CommandBase {
     @Override
     public void execute() {
         // TODO find necessary turret position using VisionController
-        double current = m_turret.getEncoderPosition();
+        double currentPos = m_turret.getEncoderPosition();
         double change = VisionController.TurretVision.getTurretPositionFromAngle();
-        m_turret.setPosition(current + change);
+        m_turret.setPosition(currentPos + change);
+        //System.out.println(Limelight.getCrosshairHorizontalOffset());
+        //System.out.println(Limelight.getCrosshairVerticalOffset());
+        SmartDashboard.putBoolean("Is Ready", m_turret.isReady());
+        SmartDashboard.putNumber("TurretPosition", m_turret.getPositionDegrees());
     }
     
 }
