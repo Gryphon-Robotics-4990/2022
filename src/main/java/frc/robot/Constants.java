@@ -16,8 +16,10 @@ public final class Constants {
         public static int PORT_JOYSTICK_OPERATOR = 1;
 
         //RoboRIO sensor ports
+        
         //TODO wire breakbeam
-        //public static int DIO_BREAKBEAM = -1;
+        public static int DIO_BREAKBEAM = -1;
+
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
 
