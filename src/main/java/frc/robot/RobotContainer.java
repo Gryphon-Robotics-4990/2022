@@ -72,7 +72,8 @@ public class RobotContainer {
 
         joystickOperator.getButton(ButtonF310.A).toggleWhenActive(m_preShooterCommand);
 
-        joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
+        //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
+        //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooter);
         joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
 
         joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);

@@ -6,7 +6,6 @@ import frc.robot.DriveUtil;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TeleopArcadeDriveCommand extends CommandBase {
@@ -32,11 +31,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         speeds[0] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         if (speeds[0] != 0 && speeds[1] != 0) System.out.println(speeds[0] + " " + speeds[1]);
-        m_drivetrain.driveRaw(speeds[0] * 0.2, speeds[1] * 0.2);
-        SmartDashboard.putNumber("Right Velocity", m_drivetrain.getVelocityRight());
-        SmartDashboard.putNumber("Left Velocity", m_drivetrain.getVelocityLeft());
-        SmartDashboard.putNumber("Right Rate", m_drivetrain.getRateRight());
-        SmartDashboard.putNumber("Left Rate", m_drivetrain.getRateLeft());
+        m_drivetrain.driveRaw(speeds[0] * 0.5, speeds[1] * 0.5);
     }
 
 }

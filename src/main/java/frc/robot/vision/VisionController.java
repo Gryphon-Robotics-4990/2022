@@ -2,11 +2,7 @@ package frc.robot.vision;
 
 import static frc.robot.Constants.*;
 
-import java.util.function.DoubleSupplier;
 import java.util.function.Function;
-
-import frc.robot.units.UnitDimensionException;
-
 
 // https://www.wired.com/2012/01/projectile-motion-primer-for-first-robotics/
 // http://docs.limelightvision.io/en/latest/cs_aimandrange.html
@@ -81,9 +77,22 @@ public class VisionController {
         }
 
         // Returns top speed, bottom speed
-        public static double[] getShooterSpeedFromLimelight() {
-            return getShooterSpeedsFromDistance(findDistanceToTarget());
+        public static double getShooterSpeedFromLimelight() {
+            //angles need to be sorted in increasing order
+            double inputAngle = findVerticalAngleToTarget();
+            double[] angles = new double[]{-10.0, 10.0};
+            double[] PIDOutputs = new double[]{20000.0, 40000.0};
+            int firstIndex = 0;
+            //firstIndex is the index of the lower bound in list angles/PIDOutputs
+            for (int i = 0; i < angles.length - 1; i++){
+                if(angles[i] < inputAngle){
+                    firstIndex = i;
+                }    
+            }
+            return (inputAngle - angles[firstIndex])*(PIDOutputs[firstIndex + 1] - PIDOutputs[firstIndex])/(angles[firstIndex + 1] - angles[firstIndex]) + PIDOutputs[firstIndex];
+            //return getShooterSpeedsFromDistance(findDistanceToTarget());
         }
+
 
         // Fits a line between two points, and plugs in an x-value along that line to find the corresponding y-value
         public static double interpolate(ControlPoint p1, ControlPoint p2, double dist) {

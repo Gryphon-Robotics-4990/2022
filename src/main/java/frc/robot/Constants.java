@@ -17,8 +17,8 @@ public final class Constants {
 
         //RoboRIO sensor ports
         
-        //TODO wire breakbeam
-        public static int DIO_BREAKBEAM = -1;
+        //TODO find breakbeam port
+        public static int DIO_BREAKBEAM = 0;
 
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
@@ -124,10 +124,7 @@ public final class Constants {
         public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
         //Shooter movement information
-        public static double SHOOTER_MAXIMUM_TESTED_ENCODER_VELOCITY = 5000;//TODO find this number
-        public static double SHOOTER_MAXIMUM_ALLOWED_VELOCITY_ERROR = 50;//TODO find this number
-        public static double SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES = 0.1;//TODO find this number
-        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 0;
+        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 200;
         public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 100;
     }
 
@@ -166,7 +163,7 @@ public final class Constants {
  
     //Miscellaneous
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
-    public static double JOYSTICK_INPUT_EXPONENT = 5/3/*2*/;
+    public static double JOYSTICK_INPUT_EXPONENT = 3/2/*2*/;
 
     //Operation config
     //@Config(name = "Rotation Input Multiplier", tabName = "Op Configuration")

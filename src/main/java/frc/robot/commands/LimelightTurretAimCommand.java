@@ -22,10 +22,6 @@ public class LimelightTurretAimCommand extends CommandBase {
         double currentPos = m_turret.getEncoderPosition();
         double change = VisionController.TurretVision.getTurretPositionFromAngle();
         m_turret.setPosition(currentPos + change);
-        //System.out.println(Limelight.getCrosshairHorizontalOffset());
-        //System.out.println(Limelight.getCrosshairVerticalOffset());
-        SmartDashboard.putBoolean("Is Ready", m_turret.isReady());
-        SmartDashboard.putNumber("TurretPosition", m_turret.getPositionDegrees());
     }
     
 }

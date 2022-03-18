@@ -4,9 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.TurretManualCommand;
-import frc.robot.units.UnitDimensionException;
 import io.github.oblarg.oblog.annotations.Log;
 
 import static frc.robot.Constants.*;
@@ -21,6 +22,13 @@ public class TurretSubsystem extends SubsystemBase {
         configureMotors();
         // Zeroing turret from wherever we start it at
         m_turretTalon.setSelectedSensorPosition(0);
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Turret Position", getPositionDegrees());
+        SmartDashboard.putBoolean("Turret Ready?", isReady());
     }
 
     public void setPosition(double position) {

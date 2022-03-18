@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -9,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 import frc.robot.vision.Limelight;
 import io.github.oblarg.oblog.annotations.Log;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_topTalon, m_rightBottomTalon, m_leftBottomTalon;
@@ -22,6 +21,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
         configureMotors();
         m_rightBottomTalon.setSelectedSensorPosition(0);
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Shooter Speed", getVelocityBottom());
     }
 
     public void shootPID(double top, double bottom) {

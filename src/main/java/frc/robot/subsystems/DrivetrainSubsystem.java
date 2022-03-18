@@ -7,9 +7,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DriveUtil;
-import frc.robot.vision.Limelight;
 import static frc.robot.Constants.*;
-import io.github.oblarg.oblog.annotations.Log;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
@@ -35,6 +35,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightFrontTalon.set(ControlMode.Position, pos);
     }
 
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Right Velocity", getVelocityRight());
+        SmartDashboard.putNumber("Left Velocity", getVelocityLeft());
+        SmartDashboard.putBoolean("Drivetrain Stopped", drivetrainReady());
+    }
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
         //TODO Add acceleration to feedforward?
@@ -68,10 +75,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         this.arcadeDrive(speeds[0], speeds[1]);
     }
 
-    public boolean isReady() {
-        return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES;
-    }
-
     public double getDistanceLeft() {
         return m_leftFrontTalon.getSelectedSensorPosition() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_DISTANCE_TO_METERS;
     }
@@ -88,37 +91,30 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_rightFrontTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
 
-    @Log(name = "Drivetrain Ready")
     public boolean drivetrainReady() {
         return Math.abs(getRateLeft()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && Math.abs(getRateRight()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
     }
 
-    //@Log
     public int getVelocityRight() {
         return (int)m_rightFrontTalon.getSelectedSensorVelocity();
     }
 
-    //@Log
     public int getVelocityLeft() {
         return (int)m_leftFrontTalon.getSelectedSensorVelocity();
     }
 
-    //@Log
     public int getErrorLeft() {
         return (int)m_leftFrontTalon.getClosedLoopError();
     }
 
-    //@Log
     public int getErrorRight() {
         return (int)m_rightFrontTalon.getClosedLoopError();
     }
 
-    //@Log
     public double getTargetLeft() {
         return m_leftFrontTalon.getControlMode() == ControlMode.Velocity ? m_leftFrontTalon.getClosedLoopTarget() : 0;
     }
 
-    //@Log
     public double getTargetRight() {
         return m_rightFrontTalon.getControlMode() == ControlMode.Velocity ? m_rightFrontTalon.getClosedLoopTarget() : 0;
     }
