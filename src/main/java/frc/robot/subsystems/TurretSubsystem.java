@@ -47,9 +47,7 @@ public class TurretSubsystem extends SubsystemBase {
     public double getPositionDegrees() {
         //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLUTION;
         double factor = 1;
-        try {
-            factor = Units.ENCODER_ANGLE.to(Units.DEGREE);
-        } catch (UnitDimensionException e) {}
+        factor = Units.ENCODER_ANGLE.to(Units.DEGREE);
         return factor * (RobotMeasurements.TURRET_MOTOR_REDUCTION * m_turretTalon.getSelectedSensorPosition());
     }
 

@@ -36,12 +36,10 @@ public class ShooterSubsystem extends SubsystemBase {
         System.out.printf("Left: %f, Right: %f\n", m_leftBottomTalon.getSupplyCurrent(), m_rightBottomTalon.getSupplyCurrent());
     }
 
-    @Log(name = "Shooter Ready")
-    public Boolean isReady() {
-        return Math.abs(Limelight.getCrosshairHorizontalOffset()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
+    public boolean isReady() {
+        return Math.abs(getErrorBottom()) < SubsystemConfig.SHOOTER_MAXIMUM_ALLOWED_ERROR;
     }
 
-    @Log
     public boolean isTopRunning() {
         return m_topTalon.getMotorOutputPercent() > 0.0;
     }

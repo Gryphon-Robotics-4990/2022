@@ -53,8 +53,8 @@ public final class Constants {
     public static class RobotMeasurements {
         //TODO find robot physical characteristics
         public static double DRIVETRAIN_TRACKWIDTH = -1;
-        public static double DRIVETRAIN_WHEEL_RADIUS = -1;
-        public static double DRIVETRAIN_WHEEL_RADIUS_METERS = -1;
+        public static double DRIVETRAIN_WHEEL_RADIUS = 3;
+        public static double DRIVETRAIN_WHEEL_RADIUS_METERS = DRIVETRAIN_WHEEL_RADIUS * Units.INCH.to(Units.METER);
         public static double DRIVETRAIN_TRACKWIDTH_METERS = -1;
         public static double TURRET_MOTOR_REDUCTION = 700;
         public static double TALON_ENCODER_RESOLUTION = 4096;
@@ -69,9 +69,10 @@ public final class Constants {
     
     public static class Units {
         //Base units
-        Unit METER = new BaseUnit(Dimension.Length, 1d);
+        public static Unit METER = new BaseUnit(Dimension.Length, 1d);
         Unit KILOMETER = new BaseUnit(Dimension.Length, METER.getScalar() * 1000d);
-        Unit FEET = new BaseUnit(Dimension.Length, METER.getScalar() * 3.280839895d);
+        public static Unit FEET = new BaseUnit(Dimension.Length, METER.getScalar() * 3.280839895d);
+        public static Unit INCH = new BaseUnit(Dimension.Length, FEET.getScalar() *(1/12));
 
         Unit SECOND = new BaseUnit(Dimension.Time, 1d);
         Unit MINUTE = new BaseUnit(Dimension.Time, SECOND.getScalar() * 60d);
@@ -127,13 +128,14 @@ public final class Constants {
         public static double SHOOTER_MAXIMUM_ALLOWED_VELOCITY_ERROR = 50;//TODO find this number
         public static double SHOOTER_MAXIMUM_ALLOWED_ANGULAR_ERROR_DEGREES = 0.1;//TODO find this number
         public static double TURRET_MAXIMUM_ALLOWED_ERROR = 0;
-        public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 0;
+        public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 100;
     }
 
     public static class Vision {
-        //8 ft 8 in (freedom units) - 264 cm
+        // 8 ft 8 in (freedom units) = 264 cm
         public static double TARGET_HEIGHT_METERS = 2.64;
         // The distance at which we need to switch to lobs (no top roller)
+        // At distances where we would need a lob, the limelight can't see the target anyways
         public static double LOB_THRESHOLD = 10;
         public static ControlPoint[] CONTROL_POINTS = {
             //Add control points here

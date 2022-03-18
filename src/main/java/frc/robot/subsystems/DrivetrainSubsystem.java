@@ -29,6 +29,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightFrontTalon.setSelectedSensorPosition(0);
     }
 
+    // Drive to a certain encoder position, used during auto
+    public void driveToPosition(double pos) {
+        m_leftFrontTalon.set(ControlMode.Position, pos);
+        m_rightFrontTalon.set(ControlMode.Position, pos);
+    }
+
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
         //TODO Add acceleration to feedforward?

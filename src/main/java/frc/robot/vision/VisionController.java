@@ -19,10 +19,8 @@ public class VisionController {
 
     public static double findVerticalAngleToTarget() {
         double target_offset = 0d;
-        try {
-            double factor = Units.DEGREE.to(Units.RADIAN);
-            target_offset = factor * Limelight.getCrosshairVerticalOffset();
-        } catch (UnitDimensionException e) {/* Will never throw this error because we know it can convert degrees to radians*/}
+        double factor = Units.DEGREE.to(Units.RADIAN);
+        target_offset = factor * Limelight.getCrosshairVerticalOffset();
         return RobotMeasurements.LIMELIGHT_ANGLE_RADIANS + target_offset;
     }
 
@@ -102,11 +100,8 @@ public class VisionController {
     public static class TurretVision {
         public static double getTurretPositionFromAngle() {
             double position = 0d;
-            try {
-                double factor = Units.DEGREE.to(Units.ENCODER_ANGLE);
-                position = factor * Limelight.getCrosshairHorizontalOffset();
-            } catch (UnitDimensionException e) {/* Won't throw exception because both dimensions are angles*/}
-            
+            double factor = Units.DEGREE.to(Units.ENCODER_ANGLE);
+            position = factor * Limelight.getCrosshairHorizontalOffset();
             return position;
         }
     }
