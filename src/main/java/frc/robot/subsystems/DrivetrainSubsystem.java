@@ -40,7 +40,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     {
         SmartDashboard.putNumber("Right Velocity", getVelocityRight());
         SmartDashboard.putNumber("Left Velocity", getVelocityLeft());
-        SmartDashboard.putBoolean("Drivetrain Stopped", drivetrainReady());
+        SmartDashboard.putBoolean("Drivetrain Stopped", drivetrainReadyToShoot());
     }
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
@@ -91,8 +91,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return m_rightFrontTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
 
-    public boolean drivetrainReady() {
+    public boolean drivetrainReadyToShoot() {
         return Math.abs(getRateLeft()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD && Math.abs(getRateRight()) < SubsystemConfig.DRIVETRAIN_STOP_THRESHOLD;
+    }
+
+    public boolean isInPosition() {
+        return Math.abs(getErrorLeft()) < SubsystemConfig.DRIVETRAIN_MAXIMUM_ALLOWED_ERROR && Math.abs(getErrorLeft()) < SubsystemConfig.DRIVETRAIN_MAXIMUM_ALLOWED_ERROR;
     }
 
     public int getVelocityRight() {

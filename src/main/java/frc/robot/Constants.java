@@ -123,9 +123,10 @@ public final class Constants {
         public static double DRIVETRAIN_CLOSED_LOOP_RAMP = 0.1; //seconds from 0 to full or full to 0
         public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
-        //Shooter movement information
         public static double TURRET_MAXIMUM_ALLOWED_ERROR = 200;
         public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 100;
+        // During auto, how far we can be off the correct PID position
+        public static double DRIVETRAIN_MAXIMUM_ALLOWED_ERROR = 200;
     }
 
     public static class Vision {

@@ -14,8 +14,8 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
     public AutoMoveShootBallCommand(DrivetrainSubsystem drivetrain, ShooterSubsystem shooterSubsystem, 
         ShooterPIDCommand shooterCommand, PreShooterCommand preShooterCommand) {
         
-            DriveBackwardsCommand driveBack = new DriveBackwardsCommand(drivetrain);
-        WaitToShootCommand waitToShoot = new WaitToShootCommand(shooterSubsystem);
+        DriveBackwardsCommand driveBack = new DriveBackwardsCommand(drivetrain);
+        WaitToShootCommand waitToShoot = new WaitToShootCommand(drivetrain, shooterSubsystem);
 
         addCommands(
             driveBack,
@@ -55,15 +55,17 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
 
     private class WaitToShootCommand extends CommandBase {
         
+        DrivetrainSubsystem m_drivetrain;
         ShooterSubsystem m_shoot;
 
-        public WaitToShootCommand(ShooterSubsystem shoot) {
+        public WaitToShootCommand(DrivetrainSubsystem drive, ShooterSubsystem shoot) {
+            m_drivetrain = drive;
             m_shoot = shoot;
         }
 
         @Override
         public boolean isFinished() {
-            return m_shoot.isReady();
+            return m_drivetrain.isInPosition() && m_shoot.isReady();
         }
     }
 }
