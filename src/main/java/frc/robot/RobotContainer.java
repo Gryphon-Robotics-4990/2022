@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.vision.VisionController;
-import io.github.oblarg.oblog.Logger;
 import frc.robot.JoystickF310.*;
 
 import static frc.robot.Constants.*;
@@ -38,14 +37,13 @@ public class RobotContainer {
     private final RegurgitationCommand m_regurgitationCommand = new RegurgitationCommand(m_intake, m_preShooter);
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
 
-    private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter, m_shooterPIDCommand, m_preShooterCommand);
+    private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Configure all the control bindings
         configureControlBindings();
         //VisionController.ShooterVision.setControlPoints(Vision.CONTROL_POINTS);
-        Logger.configureLoggingAndConfig(this, false);
     }
 
     private void configureControlBindings() {
@@ -59,12 +57,8 @@ public class RobotContainer {
         );
 
 
-        m_turretManualCommand.setSupplier(
-            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_INPUT_EXPONENT)
-        );
-
-        //m_bottomShooterJoystickTest.setSuppliers(
-        //     () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickRightY), JOYSTICK_INPUT_EXPONENT)
+        // m_turretManualCommand.setSupplier(
+        //     () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_INPUT_EXPONENT)
         // );
 
 
@@ -73,12 +67,9 @@ public class RobotContainer {
         joystickOperator.getButton(ButtonF310.A).toggleWhenActive(m_preShooterCommand);
 
         //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
-        //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooter);
         joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
 
         joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
-
-
 
         // Configures the switching between manual and automatic turret modes
         // It's only possible to zero the turret when its button is pressed and the mode is toggled to manual control
@@ -88,18 +79,17 @@ public class RobotContainer {
         //TODO find button to zero turret
         // joystickOperator.getButton(ButtonF310.Y).toggleWhenActive(m_turretManualCommand)
         //     .and(joystickOperator.getButton(ButtonF310.B)).toggleWhenActive(m_zeroTurretCommand);
-        
+    
+    }
+
+    public void setTeleopDefaultCommands() {
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
         CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_shooterPIDCommand);
     }
 
-    public void updateLoggerEntries() {
-        Logger.updateEntries();
-    }
-
     public Command getAutonomousCommand() {
         // Moving backwards and shooting the ball we start with
-        return m_autoMoveShootBallCommand;
+        return null/*m_autoMoveShootBallCommand*/;
     }
 }

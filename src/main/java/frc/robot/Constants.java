@@ -70,17 +70,17 @@ public final class Constants {
     public static class Units {
         //Base units
         public static Unit METER = new BaseUnit(Dimension.Length, 1d);
-        Unit KILOMETER = new BaseUnit(Dimension.Length, METER.getScalar() * 1000d);
+        public static Unit KILOMETER = new BaseUnit(Dimension.Length, METER.getScalar() * 1000d);
         public static Unit FEET = new BaseUnit(Dimension.Length, METER.getScalar() * 3.280839895d);
         public static Unit INCH = new BaseUnit(Dimension.Length, FEET.getScalar() *(1/12));
 
-        Unit SECOND = new BaseUnit(Dimension.Time, 1d);
-        Unit MINUTE = new BaseUnit(Dimension.Time, SECOND.getScalar() * 60d);
-        Unit HOUR = new BaseUnit(Dimension.Time, MINUTE.getScalar() * 60d);
-        Unit MILLISECOND = new BaseUnit(Dimension.Time, SECOND.getScalar() / 1000d);
-        Unit ENCODER_TIME = new BaseUnit(Dimension.Time, MILLISECOND.getScalar() * 100d);
+        public static Unit SECOND = new BaseUnit(Dimension.Time, 1d);
+        public static Unit MINUTE = new BaseUnit(Dimension.Time, SECOND.getScalar() * 60d);
+        public static Unit HOUR = new BaseUnit(Dimension.Time, MINUTE.getScalar() * 60d);
+        public static Unit MILLISECOND = new BaseUnit(Dimension.Time, SECOND.getScalar() / 1000d);
+        public static Unit ENCODER_TIME = new BaseUnit(Dimension.Time, MILLISECOND.getScalar() * 100d);
         
-        Unit KILOGRAM = new BaseUnit(Dimension.Mass, 1d);
+        public static Unit KILOGRAM = new BaseUnit(Dimension.Mass, 1d);
 
         public static Unit RADIAN = new BaseUnit(Dimension.Angle, 1d);
         public static Unit REVOLUTION = new BaseUnit(Dimension.Angle, RADIAN.getScalar() * 2d * Math.PI);
@@ -88,18 +88,18 @@ public final class Constants {
         // Angle represented by encoder ticks, i.e 4096 ticks is a full revolution
         public static Unit ENCODER_ANGLE = new BaseUnit(Dimension.Angle, REVOLUTION.getScalar() / MotorConfig.TALON_ENCODER_RESOLUTION);
 
-        Unit AMPERE = new BaseUnit(Dimension.Current, 1d);
+        public static Unit AMPERE = new BaseUnit(Dimension.Current, 1d);
 
         //Compound units
-        Unit ENCODER_ANGULAR_VELOCITY = new CompoundUnit(ENCODER_ANGLE, ENCODER_TIME);
+        public static Unit ENCODER_ANGULAR_VELOCITY = new CompoundUnit(ENCODER_ANGLE, ENCODER_TIME);
 
-        Unit METERS_PER_SECOND = new CompoundUnit(METER, SECOND);
+        public static Unit METERS_PER_SECOND = new CompoundUnit(METER, SECOND);
 
-        Unit METERS_PER_SECOND_2 = new CompoundUnit(METERS_PER_SECOND, SECOND);
-        Unit NEWTON = new CompoundUnit(new Unit[] {KILOGRAM, METERS_PER_SECOND_2}, new Unit[] {});
-        Unit JOULE = new CompoundUnit(new Unit[] {NEWTON, METER}, new Unit[] {});
-        Unit COULOMB = new CompoundUnit(new Unit[] {AMPERE, SECOND}, new Unit[] {});
-        Unit VOLTAGE = new CompoundUnit(JOULE, COULOMB);
+        public static Unit METERS_PER_SECOND_2 = new CompoundUnit(METERS_PER_SECOND, SECOND);
+        public static Unit NEWTON = new CompoundUnit(new Unit[] {KILOGRAM, METERS_PER_SECOND_2}, new Unit[] {});
+        public static Unit JOULE = new CompoundUnit(new Unit[] {NEWTON, METER}, new Unit[] {});
+        public static Unit COULOMB = new CompoundUnit(new Unit[] {AMPERE, SECOND}, new Unit[] {});
+        public static Unit VOLTAGE = new CompoundUnit(JOULE, COULOMB);
 
         
         //TODO How to implement scalar multipliers and angular->velocity?
@@ -150,9 +150,8 @@ public final class Constants {
         //PID
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 12);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
-        public static TalonSRXGains SHOOTER_LEFT_BOTTOM_PID = new TalonSRXGains(0.2, 0.001, 6);
+        public static TalonSRXGains SHOOTER_RIGHT_BOTTOM_PID = new TalonSRXGains(0.2, 0.001, 6);
         public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00035, 5);
-        public static TalonSRXGains SHOOTER_TOP_PID = new TalonSRXGains(0,0,0);
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;

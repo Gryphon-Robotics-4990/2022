@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.TurretManualCommand;
-import io.github.oblarg.oblog.annotations.Log;
 
 import static frc.robot.Constants.*;
 
@@ -28,7 +27,8 @@ public class TurretSubsystem extends SubsystemBase {
     public void periodic()
     {
         SmartDashboard.putNumber("Turret Position", getPositionDegrees());
-        SmartDashboard.putBoolean("Turret Ready?", isReady());
+        SmartDashboard.putBoolean("Turret Manual", isTurretManual());
+        SmartDashboard.putBoolean("Turret Ready", isReady());
     }
 
     public void setPosition(double position) {
@@ -41,34 +41,32 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretTalon.set(ControlMode.PercentOutput, speed);
     }
 
-    @Log(name = "Turret Ready")
     public boolean isReady() {
         return Math.abs(m_turretTalon.getClosedLoopError()) < SubsystemConfig.TURRET_MAXIMUM_ALLOWED_ERROR;
     }
 
-    @Log(name = "Turret Manual")
     public boolean isTurretManual() {
+        if (this.getCurrentCommand() == null) {
+            return false;
+        }
         return this.getCurrentCommand().getClass() == TurretManualCommand.class;
     }
 
-    @Log.Gyro(name = "Turret Position", startingAngle = 0)
     public double getPositionDegrees() {
         //return (m_turretTalon.getSelectedSensorPosition() * 360)/RobotMeasurements.TOTAL_TURRET_TALON_TICKS_REVOLUTION;
         double factor = 1;
         factor = Units.ENCODER_ANGLE.to(Units.DEGREE);
-        return factor * (RobotMeasurements.TURRET_MOTOR_REDUCTION * m_turretTalon.getSelectedSensorPosition());
+        return factor * (m_turretTalon.getSelectedSensorPosition() / (RobotMeasurements.TURRET_MOTOR_REDUCTION / 50));
     }
 
     public double getEncoderPosition() {
         return m_turretTalon.getSelectedSensorPosition();
     }
 
-    @Log
     public int getError() {
         return (int)m_turretTalon.getClosedLoopError();
     }
 
-    @Log
     public double getTargetPosition() {
         return m_turretTalon.getControlMode() == ControlMode.Velocity ? m_turretTalon.getClosedLoopTarget() : 0;
     }

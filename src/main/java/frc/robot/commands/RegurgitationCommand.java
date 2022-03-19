@@ -18,7 +18,7 @@ public class RegurgitationCommand extends CommandBase{
 
     public void execute()
     {
-        double speed = -60;
+        double speed = -0.6;
         m_intake.setSpeed(speed);
         m_preShooter.setSpeed(speed);
     }

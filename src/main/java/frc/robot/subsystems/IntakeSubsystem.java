@@ -26,10 +26,16 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("Has Ball", hasBall());
+        SmartDashboard.putBoolean("Intake On", isOn());
     }
 
     public boolean hasBall() {
-        return m_breakbeam.get();
+        // If beam is broken, ball is there
+        return !m_breakbeam.get();
+    }
+
+    public boolean isOn() {
+        return m_intakeRight.getMotorOutputPercent() != 0;
     }
 
     private void configureMotors() {

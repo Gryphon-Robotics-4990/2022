@@ -16,7 +16,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_leftFrontTalon, m_rightFrontTalon;
     private final WPI_VictorSPX m_leftRearVictor, m_rightRearVictor;
 
-    //@Config.NumberSlider(name = "OBLOG_TEST SPEED MULT", defaultValue = 1.1, min = 0, max = 2)
     public DrivetrainSubsystem() {
         m_leftFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX);
         m_leftRearVictor = new WPI_VictorSPX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
@@ -52,7 +51,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void drivePO(double left, double right) {
         m_leftFrontTalon.set(ControlMode.PercentOutput, left);
         m_rightFrontTalon.set(ControlMode.PercentOutput, right);
-        System.out.println(m_rightFrontTalon.getSupplyCurrent());
     }
 
     //Functions below are for 0-1

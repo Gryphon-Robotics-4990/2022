@@ -38,7 +38,6 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shootPO(double top, double bottom) {
         m_topTalon.set(ControlMode.PercentOutput, top);
         m_rightBottomTalon.set(ControlMode.PercentOutput, bottom);
-        System.out.printf("Left: %f, Right: %f\n", m_leftBottomTalon.getSupplyCurrent(), m_rightBottomTalon.getSupplyCurrent());
     }
 
     public boolean isReady() {
@@ -88,17 +87,15 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         m_rightBottomTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
-        TalonSRXConfiguration cTop = new TalonSRXConfiguration(), cBottom = new TalonSRXConfiguration();
+        TalonSRXConfiguration cBottom = new TalonSRXConfiguration();
 
-        cTop.slot0 = MotionControl.SHOOTER_TOP_PID;
-        cBottom.slot0 = MotionControl.SHOOTER_LEFT_BOTTOM_PID;
+        cBottom.slot0 = MotionControl.SHOOTER_RIGHT_BOTTOM_PID;
 
         m_topTalon.setNeutralMode(NeutralMode.Brake);
         m_rightBottomTalon.setNeutralMode(NeutralMode.Brake);
         m_leftBottomTalon.setNeutralMode(NeutralMode.Brake);
 
         //Configure talons
-        m_topTalon.configAllSettings(cTop);
         m_rightBottomTalon.configAllSettings(cBottom);
     }
     
