@@ -27,7 +27,7 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
         TurretSubsystem turret, PreShooterSubsystem preShooter) {
         m_drivetrain = drivetrain;
         
-        Command driveBack = getDriveBackCommand();
+        //Command driveBack = getDriveBackCommand();
         //WaitToShootCommand waitToShoot = new WaitToShootCommand(drivetrain, shooter);
         //TurnTurretCommand turnTurretCommand = new TurnTurretCommand(turret);
         //LimelightTurretAimCommand limelightTurretCommand = new LimelightTurretAimCommand(turret);
@@ -35,7 +35,7 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
         //PreShooterCommand preShooterCommand = new PreShooterCommand(preShooter);
 
         addCommands(
-            driveBack
+            //driveBack
             //shooterCommand
             //new SequentialCommandGroup(turnTurretCommand, limelightTurretCommand)
             // // We need to wait for the shooter to be ready
@@ -44,7 +44,7 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
         );
     }
 
-    private ParallelDeadlineGroup getDriveBackCommand() {
+    private void getDriveBackCommand() {
         // How much we're moving back by (in feet)
         double back_by = -4;
         double back_by_meters = back_by * Units.FEET.to(Units.METER);
@@ -63,7 +63,7 @@ public class AutoMoveShootBallCommand extends ParallelCommandGroup {
         Command wait = new WaitCommand(time);
         Command driveCommand = new RunCommand(() -> m_drivetrain.driveRaw(encoderVelocity, encoderVelocity), m_drivetrain);
         
-        return new ParallelDeadlineGroup(wait, wait, driveCommand);
+        //return new ParallelRaceGroup(wait, driveCommand);
 
         // Old code (requires position PID to work)
         // // Arc length (inches) -> Radians

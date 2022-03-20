@@ -36,6 +36,7 @@ public class RobotContainer {
     private final ToggleIntakeCommand m_toggleIntakeCommand = new ToggleIntakeCommand(m_intake);
     private final RegurgitationCommand m_regurgitationCommand = new RegurgitationCommand(m_intake, m_preShooter);
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
+    private final AutoCommand m_autoCommand = new AutoCommand(m_preShooter, m_shooter, m_drivetrain, m_turret);
 
     private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
     private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
@@ -90,6 +91,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // Moving backwards and shooting the ball we start with
-        return null/*m_autoMoveShootBallCommand*/;
+        //Preshooter now starts teleop phase enabled.
+        return m_autoCommand;
     }
 }
