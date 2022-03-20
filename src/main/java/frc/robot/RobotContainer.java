@@ -38,7 +38,7 @@ public class RobotContainer {
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
 
     private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
-    
+    private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Configure all the control bindings
@@ -57,20 +57,19 @@ public class RobotContainer {
         );
 
 
-        // m_turretManualCommand.setSupplier(
-        //     () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_INPUT_EXPONENT)
-        // );
-
+        m_turretManualCommand.setSupplier(
+            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_INPUT_EXPONENT)
+        );
 
         joystickOperator.getButton(ButtonF310.Y).toggleWhenPressed(m_turretManualCommand);
 
-        joystickOperator.getButton(ButtonF310.A).toggleWhenActive(m_preShooterCommand);
+        //joystickOperator.getButton(ButtonF310.A).toggleWhenPressed(m_preShooterCommand);
 
         //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
         joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
 
         joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
-
+        joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
         // Configures the switching between manual and automatic turret modes
         // It's only possible to zero the turret when its button is pressed and the mode is toggled to manual control
         // The turret manual command is automatically scheduled when manual mode is toggled
@@ -79,13 +78,14 @@ public class RobotContainer {
         //TODO find button to zero turret
         // joystickOperator.getButton(ButtonF310.Y).toggleWhenActive(m_turretManualCommand)
         //     .and(joystickOperator.getButton(ButtonF310.B)).toggleWhenActive(m_zeroTurretCommand);
-    
+        
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
+        //CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_shooterPIDCommand);
     }
 
     public void setTeleopDefaultCommands() {
-        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_shooterPIDCommand);
+        //Put default command setters here once auto works
     }
 
     public Command getAutonomousCommand() {

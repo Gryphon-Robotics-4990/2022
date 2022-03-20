@@ -26,18 +26,22 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Shooter Speed", getVelocityBottom());
+        SmartDashboard.putBoolean("Shooter On", isOn());
     }
 
     public void shootPID(double top, double bottom) {
         m_topTalon.set(ControlMode.Velocity, top);
         m_rightBottomTalon.set(ControlMode.Velocity, bottom);
-        System.out.println(m_rightBottomTalon.getSelectedSensorVelocity());
+        System.out.println(m_rightBottomTalon.getSupplyCurrent());
     }
 
     public void shootPO(double top, double bottom) {
         m_topTalon.set(ControlMode.PercentOutput, top);
         m_rightBottomTalon.set(ControlMode.PercentOutput, bottom);
+    }
+
+    public boolean isOn() {
+        return m_rightBottomTalon.getSelectedSensorVelocity() == 0;
     }
 
     public boolean isReady() {

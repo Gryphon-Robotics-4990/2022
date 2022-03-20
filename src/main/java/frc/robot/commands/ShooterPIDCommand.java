@@ -7,8 +7,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterPIDCommand extends CommandBase {
     private final ShooterSubsystem m_shooterSubsystem;
     private final double topSpeed = 0;
-    private final double bottomSpeed = 30000;//28000 is good
-    
+    // Once we PID tune
+    //private final double bottomSpeed = 26000;//28000 is good, 30000 maybe too high
+    private final double bottomPercent = 0.4;
+
     public ShooterPIDCommand(ShooterSubsystem shooter) {
         m_shooterSubsystem = shooter;
         addRequirements(shooter);
@@ -16,11 +18,15 @@ public class ShooterPIDCommand extends CommandBase {
     
     @Override
     public void execute() {
-        m_shooterSubsystem.shootPID(topSpeed, bottomSpeed);
+        // Once we PID tune
+        //m_shooterSubsystem.shootPID(topSpeed, bottomSpeed);
+        m_shooterSubsystem.shootPO(0, bottomPercent);
 
     }
     @Override
     public void end(boolean interrupted) {
-        m_shooterSubsystem.shootPID(0,0);
+        // Once we PID tune
+        //m_shooterSubsystem.shootPID(0,0);
+        m_shooterSubsystem.shootPO(0,0);
     }
 }

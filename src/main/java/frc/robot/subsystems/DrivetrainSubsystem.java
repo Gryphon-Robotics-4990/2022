@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX m_leftFrontTalon, m_rightFrontTalon;
-    private final WPI_VictorSPX m_leftRearVictor, m_rightRearVictor;
+    private final WPI_TalonSRX m_leftFrontTalon, m_leftRearTalon, m_rightFrontTalon;
+    private final WPI_VictorSPX m_rightRearVictor;
 
     public DrivetrainSubsystem() {
         m_leftFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_FRONT_TALONSRX);
-        m_leftRearVictor = new WPI_VictorSPX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
+        m_leftRearTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_LEFT_REAR_TALONSRX);
         m_rightFrontTalon = new WPI_TalonSRX(Ports.CAN_DRIVETRAIN_RIGHT_FRONT_TALONSRX);
         m_rightRearVictor = new WPI_VictorSPX(Ports.CAN_DRIVETRAIN_RIGHT_REAR_TALONSRX);
 
@@ -125,7 +125,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         
         //First setup talons with default settings
         m_leftFrontTalon.configFactoryDefault();
-        m_leftRearVictor.configFactoryDefault();
+        m_leftRearTalon.configFactoryDefault();
         m_rightFrontTalon.configFactoryDefault();
         m_rightRearVictor.configFactoryDefault();
 
@@ -138,7 +138,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightRearVictor.setInverted(true);
         
 
-        m_leftRearVictor.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        m_leftRearTalon.follow(m_leftFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
         m_rightRearVictor.follow(m_rightFrontTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         //Setup talon built-in PID
@@ -159,10 +159,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
 
         //Brake mode so no coasting
-        m_leftFrontTalon.setNeutralMode(NeutralMode.Brake);
-        m_leftRearVictor.setNeutralMode(NeutralMode.Brake);
-        m_rightFrontTalon.setNeutralMode(NeutralMode.Brake);
-        m_rightRearVictor.setNeutralMode(NeutralMode.Brake);
+        m_leftFrontTalon.setNeutralMode(NeutralMode.Coast);
+        m_leftRearTalon.setNeutralMode(NeutralMode.Coast);
+        m_rightFrontTalon.setNeutralMode(NeutralMode.Coast);
+        m_rightRearVictor.setNeutralMode(NeutralMode.Coast);
 
         //Configure talons
         m_leftFrontTalon.configAllSettings(cLeft);

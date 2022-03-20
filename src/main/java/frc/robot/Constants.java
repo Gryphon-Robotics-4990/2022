@@ -36,9 +36,9 @@ public final class Constants {
         public static int CAN_INTAKE_RIGHT_TALONSRX = 8;
         public static int CAN_PRESHOOTER_TALONSRX = 7;
         //
-        public static int CAN_SHOOTER_TOP_TALONSRX = 23;
+        public static int CAN_SHOOTER_TOP_TALONSRX = 10;//used to be 23
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
-        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 10;
+        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 23;//used to be 10
     }
 
     public static class MotorConfig {
@@ -124,7 +124,7 @@ public final class Constants {
         public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
         public static double TURRET_MAXIMUM_ALLOWED_ERROR = 200;
-        public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 100;
+        public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 200;
         // During auto, how far we can be off the correct PID position
         public static double DRIVETRAIN_MAXIMUM_ALLOWED_ERROR = 200;
     }
