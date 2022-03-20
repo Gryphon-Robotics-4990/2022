@@ -11,6 +11,8 @@ import frc.robot.commands.TurretManualCommand;
 
 import static frc.robot.Constants.*;
 
+import java.util.function.BooleanSupplier;
+
 public class TurretSubsystem extends SubsystemBase {
 
     private final WPI_TalonSRX m_turretTalon;

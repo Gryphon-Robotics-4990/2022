@@ -7,8 +7,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DriveUtil;
+import frc.robot.commands.DriveContinuous;
+
 import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.Calendar;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -32,6 +37,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void driveToPosition(double pos) {
         m_leftFrontTalon.set(ControlMode.Position, pos);
         m_rightFrontTalon.set(ControlMode.Position, pos);
+    }
+
+    /*public void driveBack(double meters){
+        double duration = meters/0.002015;
+        //divide by (maxSpeed/2) (2.015 meters per second) and multiply by 1000 to get ms from secs
+        Calendar timer = Calendar.getInstance();
+        double targetMs = timer.getTimeInMillis() + duration;
+        while(timer.getTimeInMillis() < targetMs) {
+            driveRaw(); // we need to drive back at half of max speed, or 2.015 m/s.
+        }
+        
+    }*/
+
+    public ParallelRaceGroup driveBack(double meters){
+        double duration = meters/2.015;
+        //divide by (maxSpeed/2), which is 2.015 meters per second
+        return new ParallelRaceGroup(new WaitCommand(duration), new DriveContinuous(this, -0.5, -0.5));
     }
 
     @Override
