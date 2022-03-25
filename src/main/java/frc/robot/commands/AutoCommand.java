@@ -21,7 +21,7 @@ public class AutoCommand extends ParallelCommandGroup {
     public AutoCommand(DrivetrainSubsystem drive, PreShooterSubsystem preShooter, ShooterSubsystem shooter, TurretSubsystem turret) {
         m_drivetrain = drive;
 
-        int preShooterRunLength = 2;
+        int preShooterRunLength = 5;
         // Distance to move backwards (meters)
         double distanceBack = -0.75;
         ParallelRaceGroup driveCommand = getDriveBackCommand(distanceBack);
@@ -31,7 +31,7 @@ public class AutoCommand extends ParallelCommandGroup {
             new ShooterPIDCommand(shooter),
             new SequentialCommandGroup(
                 new ParallelCommandGroup(
-                    driveCommand,
+                    //driveCommand,
                     new SequentialCommandGroup(
                         new ParallelRaceGroup(
                             new TurretPositionCommand(turret),
