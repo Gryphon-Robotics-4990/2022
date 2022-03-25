@@ -18,7 +18,7 @@ public final class Constants {
         //RoboRIO sensor ports
         
         //TODO find breakbeam port
-        public static int DIO_BREAKBEAM = 0;
+        public static int DIO_BREAKBEAM = 1;
 
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
@@ -56,7 +56,7 @@ public final class Constants {
         public static double DRIVETRAIN_WHEEL_RADIUS = 3;
         public static double DRIVETRAIN_WHEEL_RADIUS_METERS = DRIVETRAIN_WHEEL_RADIUS * Units.INCH.to(Units.METER);
         public static double DRIVETRAIN_TRACKWIDTH_METERS = -1;
-        public static double TURRET_MOTOR_REDUCTION = 700;
+        public static double TURRET_MOTOR_REDUCTION = 14; // x50 for versa gearbox, but turret is after the reduction
         public static double TALON_ENCODER_RESOLUTION = 4096;
         public static double TOTAL_TURRET_TALON_TICKS_REVOLOTION = TALON_ENCODER_RESOLUTION * TURRET_MOTOR_REDUCTION;
 
@@ -119,11 +119,11 @@ public final class Constants {
         //Drivetrain movement information
         public static double DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY = 3450;//Approx 4.03 meters per second
         public static double DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND = 3.95;//Max is ~4. RECACLULATIONS SHOW THIS VALUE SHOULD BE 0.395
-        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
+        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * /*Conversions.*/Units.ENCODER_ANGULAR_VELOCITY.to(Units.METERS_PER_SECOND);
         public static double DRIVETRAIN_CLOSED_LOOP_RAMP = 0.1; //seconds from 0 to full or full to 0
         public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
-        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 200;
+        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 500;
         public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 200;
         // During auto, how far we can be off the correct PID position
         public static double DRIVETRAIN_MAXIMUM_ALLOWED_ERROR = 200;
@@ -150,8 +150,9 @@ public final class Constants {
         //PID
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 12);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
-        public static TalonSRXGains SHOOTER_RIGHT_BOTTOM_PID = new TalonSRXGains(0.2, 0.001, 6);
-        public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00035, 5);
+        public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.45, 0.0001, 25);
+        public static TalonSRXGains TURRET_OLD_PID = new TalonSRXGains(1, 0.00035, 5); // didn't work during SFR
+        public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00005, 16); // Don't ask
 
         //Feedforward
         public static double DRIVETRAIN_FEEDFORWARD_KV_UNITS = 1 / 12 / MotorConfig.TALON_ENCODER_RESOLUTION * 10;
@@ -163,11 +164,13 @@ public final class Constants {
  
     //Miscellaneous
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
-    public static double JOYSTICK_INPUT_EXPONENT = 3/2/*2*/;
+    public static double JOYSTICK_THROTTLE_EXPONENT = 1;//11/8;
+    public static double JOYSTICK_TURNING_EXPONENT = 11/8;
+    public static double JOYSTICK_OPERATOR_EXPONENT = 2;
 
     //Operation config
     //@Config(name = "Rotation Input Multiplier", tabName = "Op Configuration")
-    public static double ARCADE_ROTATION_MULTIPLIER = 0.75;
+    public static double ARCADE_ROTATION_MULTIPLIER = 0.5;
 
     //@Config(name = "Speed Input Multiplier", tabName = "Op Configuration")
     public static double ARCADE_SPEED_MULTIPLIER = 1;

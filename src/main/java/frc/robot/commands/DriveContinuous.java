@@ -13,6 +13,7 @@ public class DriveContinuous extends CommandBase {
     public DriveContinuous(DrivetrainSubsystem drivetrain, double speedLeft, double speedRight) {
         m_drivetrain = drivetrain;
         addRequirements(drivetrain);
+        
         this.speedLeft = speedLeft;
         this.speedRight = speedRight;
     }

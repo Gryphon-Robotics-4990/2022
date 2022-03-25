@@ -37,6 +37,11 @@ public class TurretSubsystem extends SubsystemBase {
         m_turretTalon.set(ControlMode.Position, position);
     }
 
+    public void setPositionDegrees(double deg) {
+        double ticks = deg * Units.DEGREE.to(Units.ENCODER_ANGLE) * RobotMeasurements.TURRET_MOTOR_REDUCTION;
+        setPosition(ticks);
+    }
+
     public void drivePO(double speed) {
         double factor = 0.5; // We want to limit rotation speed
         speed *= factor;
@@ -70,7 +75,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double getTargetPosition() {
-        return m_turretTalon.getControlMode() == ControlMode.Velocity ? m_turretTalon.getClosedLoopTarget() : 0;
+        return m_turretTalon.getControlMode() == ControlMode.Position ? m_turretTalon.getClosedLoopTarget() : 0;
     }
 
     private void configureMotors() {
@@ -79,10 +84,11 @@ public class TurretSubsystem extends SubsystemBase {
 
         //Inverts the direction that the encoder reads
         // (clockwise being positive or counter-clockwise being positive)
-        m_turretTalon.setSensorPhase(true);
+        m_turretTalon.setSensorPhase(false);
 
-        // Do we need Motor inversion?
-        m_turretTalon.setInverted(true);
+        m_turretTalon.setInverted(false);
+
+        // Having both inverted and sensor phase set to false seemed to work
 
         // Setup talon built-in PID
         m_turretTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);

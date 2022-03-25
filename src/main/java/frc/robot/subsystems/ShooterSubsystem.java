@@ -6,15 +6,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
-import frc.robot.vision.Limelight;
-import io.github.oblarg.oblog.annotations.Log;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends SubsystemBase {
     private final WPI_TalonSRX m_topTalon, m_rightBottomTalon, m_leftBottomTalon;
 
     public ShooterSubsystem() {
-        //The top and left bottom talons use their own PID, but the bottom left just follows the bottom right.
+        //The top and right bottom talons use their own PID, but the bottom left just follows the bottom right.
         m_topTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_TOP_TALONSRX);
         m_rightBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX);
         m_leftBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_LEFT_BOTTOM_TALONSRX);
@@ -32,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shootPID(double top, double bottom) {
         m_topTalon.set(ControlMode.Velocity, top);
         m_rightBottomTalon.set(ControlMode.Velocity, bottom);
-        System.out.println(m_rightBottomTalon.getSupplyCurrent());
+        //System.out.println(m_rightBottomTalon.getSupplyCurrent());
     }
 
     public void shootPO(double top, double bottom) {
@@ -56,17 +54,14 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_rightBottomTalon.getSelectedSensorVelocity() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_VELOCITY_TO_METERS_PER_SECOND;
     }
 
-    //@Log
     public int getVelocityBottom() {
         return (int)m_rightBottomTalon.getSelectedSensorVelocity();
     }
 
-    //@Log
     public int getErrorBottom() {
         return (int)m_rightBottomTalon.getClosedLoopError();
     }
 
-    @Log
     public double getTargetBottom() {
         return m_rightBottomTalon.getControlMode() == ControlMode.Velocity ? m_rightBottomTalon.getClosedLoopTarget() : 0;
     }
@@ -93,7 +88,7 @@ public class ShooterSubsystem extends SubsystemBase {
         
         TalonSRXConfiguration cBottom = new TalonSRXConfiguration();
 
-        cBottom.slot0 = MotionControl.SHOOTER_RIGHT_BOTTOM_PID;
+        cBottom.slot0 = MotionControl.SHOOTER_BOTTOM_PID;
 
         m_topTalon.setNeutralMode(NeutralMode.Brake);
         m_rightBottomTalon.setNeutralMode(NeutralMode.Brake);

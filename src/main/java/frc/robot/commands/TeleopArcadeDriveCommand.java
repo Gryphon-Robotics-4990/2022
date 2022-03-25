@@ -31,7 +31,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         speeds[0] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         
-        m_drivetrain.driveRaw(speeds[0] * 0.5, speeds[1] * 0.5);
+        m_drivetrain.driveRaw(speeds[0], speeds[1]);
     }
 
 }

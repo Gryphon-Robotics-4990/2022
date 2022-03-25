@@ -29,16 +29,15 @@ public class RobotContainer {
     //private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intake);
     private final LimelightTurretAimCommand m_limelightTurretAimCommand = new LimelightTurretAimCommand(m_turret);
     private final TurretManualCommand m_turretManualCommand = new TurretManualCommand(m_turret);
-    private final ZeroTurretCommand m_zeroTurretCommand = new ZeroTurretCommand(m_turret);
-    private final LimelightShooterCommand m_limelightShooterCommand = new LimelightShooterCommand(m_shooter);
+    //private final ZeroTurretCommand m_zeroTurretCommand = new ZeroTurretCommand(m_turret);
+    //private final LimelightShooterCommand m_limelightShooterCommand = new LimelightShooterCommand(m_shooter);
     //private final ShooterPOTestCommand m_bottomShooterJoystickTest = new ShooterPOTestCommand(m_shooter);
     private final PreShooterCommand m_preShooterCommand = new PreShooterCommand(m_preShooter);
     private final ToggleIntakeCommand m_toggleIntakeCommand = new ToggleIntakeCommand(m_intake);
     private final RegurgitationCommand m_regurgitationCommand = new RegurgitationCommand(m_intake, m_preShooter);
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
-    private final AutoCommand m_autoCommand = new AutoCommand(m_preShooter, m_shooter, m_drivetrain, m_turret);
+    private final AutoCommand m_autoCommand = new AutoCommand(m_drivetrain, m_preShooter, m_shooter, m_turret);
 
-    private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
     private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -53,24 +52,24 @@ public class RobotContainer {
 
         //Drivetrain
         m_teleopArcadeDriveCommand.setSuppliers(
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_INPUT_EXPONENT),
-            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_INPUT_EXPONENT)
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_THROTTLE_EXPONENT),
+            () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_TURNING_EXPONENT)
         );
 
 
         m_turretManualCommand.setSupplier(
-            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_INPUT_EXPONENT)
+            () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_OPERATOR_EXPONENT)
         );
 
         joystickOperator.getButton(ButtonF310.Y).toggleWhenPressed(m_turretManualCommand);
 
         //joystickOperator.getButton(ButtonF310.A).toggleWhenPressed(m_preShooterCommand);
 
-        //joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
+        joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
         joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
 
         joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
-        joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
+        //joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
         // Configures the switching between manual and automatic turret modes
         // It's only possible to zero the turret when its button is pressed and the mode is toggled to manual control
         // The turret manual command is automatically scheduled when manual mode is toggled
@@ -80,9 +79,10 @@ public class RobotContainer {
         // joystickOperator.getButton(ButtonF310.Y).toggleWhenActive(m_turretManualCommand)
         //     .and(joystickOperator.getButton(ButtonF310.B)).toggleWhenActive(m_zeroTurretCommand);
         
+        // Turn this off once we test auto drive back
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
-        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
-        //CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_shooterPIDCommand);
+        // Disable default command while we figure out wtf is wrong with the turret
+        //CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
     }
 
     public void setTeleopDefaultCommands() {
@@ -91,7 +91,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // Moving backwards and shooting the ball we start with
-        //Preshooter now starts teleop phase enabled.
+        
         return m_autoCommand;
     }
 }

@@ -26,7 +26,7 @@ public class FullShootCommand extends ParallelRaceGroup {
             new SequentialCommandGroup(
                 // Once we PID tune, the isReady() will work
                 /*new WaitUntilCommand(() -> shooter.isReady()),*/
-                new WaitCommand(3),
+                new WaitCommand(2.5),
                 new ParallelRaceGroup(new WaitCommand(2), preShoot)
             )
         );

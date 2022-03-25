@@ -50,12 +50,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         
     }*/
 
-    public ParallelRaceGroup driveBack(double meters){
-        double duration = meters/2.015;
-        //divide by (maxSpeed/2), which is 2.015 meters per second
-        return new ParallelRaceGroup(new WaitCommand(duration), new DriveContinuous(this, -0.5, -0.5));
-    }
-
     @Override
     public void periodic()
     {
@@ -180,11 +174,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         //cLeft.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
         //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
 
+        NeutralMode mode = NeutralMode.Brake;
+
         //Brake mode so no coasting
-        m_leftFrontTalon.setNeutralMode(NeutralMode.Coast);
-        m_leftRearTalon.setNeutralMode(NeutralMode.Coast);
-        m_rightFrontTalon.setNeutralMode(NeutralMode.Coast);
-        m_rightRearVictor.setNeutralMode(NeutralMode.Coast);
+        m_leftFrontTalon.setNeutralMode(mode);
+        m_leftRearTalon.setNeutralMode(mode);
+        m_rightFrontTalon.setNeutralMode(mode);
+        m_rightRearVictor.setNeutralMode(mode);
 
         //Configure talons
         m_leftFrontTalon.configAllSettings(cLeft);
