@@ -78,7 +78,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_topTalon.setInverted(false);
         // Driving shooter motors in different directions
-       // m_rightBottomTalon.setInverted(false);
+        m_rightBottomTalon.setInverted(false);
         m_leftBottomTalon.setInverted(true);
 
         m_leftBottomTalon.follow(m_rightBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);

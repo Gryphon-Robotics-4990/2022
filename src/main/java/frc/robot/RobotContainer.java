@@ -82,7 +82,7 @@ public class RobotContainer {
         // Turn this off once we test auto drive back
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
         // Disable default command while we figure out wtf is wrong with the turret
-        //CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
+        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
     }
 
     public void setTeleopDefaultCommands() {

@@ -39,6 +39,7 @@ public final class Constants {
         public static int CAN_SHOOTER_TOP_TALONSRX = 10;//used to be 23
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 23;//used to be 10
+        public static int CAN_PCM = 12;
     }
 
     public static class MotorConfig {
@@ -150,7 +151,8 @@ public final class Constants {
         //PID
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 12);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
-        public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.45, 0.0001, 25);
+        //public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.45, 0.0001, 25);
+        public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.1, 0.0001, 5);
         public static TalonSRXGains TURRET_OLD_PID = new TalonSRXGains(1, 0.00035, 5); // didn't work during SFR
         public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00005, 16); // Don't ask
 
@@ -160,12 +162,13 @@ public final class Constants {
         public static SimpleMotorFeedforward DRIVETRAIN_FEEDFORWARD = new SimpleMotorFeedforward(0.843 * DRIVETRAIN_FEEDFORWARD_KS_UNITS, 0.362 * DRIVETRAIN_FEEDFORWARD_KV_UNITS, 0);
         public static SimpleMotorFeedforward SHOOTER_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
         public static SimpleMotorFeedforward TURRET_FEEDFORWARD = new SimpleMotorFeedforward(0, 0, 0);
+        
     }
  
     //Miscellaneous
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
-    public static double JOYSTICK_THROTTLE_EXPONENT = 1;//11/8;
-    public static double JOYSTICK_TURNING_EXPONENT = 11/8;
+    public static double JOYSTICK_THROTTLE_EXPONENT = 13/8;//11/8;
+    public static double JOYSTICK_TURNING_EXPONENT = 13/8/*11/8*/;
     public static double JOYSTICK_OPERATOR_EXPONENT = 2;
 
     //Operation config

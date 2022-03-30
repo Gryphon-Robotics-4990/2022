@@ -9,7 +9,6 @@ public class ShooterPIDCommand extends CommandBase {
     private final double topSpeed = 0;
     // Once we PID tune
     private final double bottomSpeed = 20000;//28000 is good, 30000 maybe too high
-    private final double bottomPercent = 0.4;
 
     public ShooterPIDCommand(ShooterSubsystem shooter) {
         m_shooterSubsystem = shooter;
