@@ -11,7 +11,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import static frc.robot.Constants.*;
 
-import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
 
 public class AutoCommand extends ParallelCommandGroup {
 
@@ -21,7 +20,7 @@ public class AutoCommand extends ParallelCommandGroup {
     public AutoCommand(DrivetrainSubsystem drive, PreShooterSubsystem preShooter, ShooterSubsystem shooter, TurretSubsystem turret) {
         m_drivetrain = drive;
 
-        int preShooterRunLength = 5;
+        int preShooterRunLength = 2;
         // Distance to move backwards (meters)
         double distanceBack = -0.75;
         ParallelRaceGroup driveCommand = getDriveBackCommand(distanceBack);
@@ -35,12 +34,11 @@ public class AutoCommand extends ParallelCommandGroup {
                     new SequentialCommandGroup(
                         new ParallelRaceGroup(
                             new TurretPositionCommand(turret),
-                            new WaitCommand(2)
+                            new WaitCommand(5)
                         ),
                         new ParallelRaceGroup(
                             //new WaitUntilCommand(() -> turret.isReady()),
                             new WaitCommand(2),
-                            //new RunCommand(() -> turret.setPositionDegrees(-90), turret)
                             new LimelightTurretAimCommand(turret)
                         )
                     )
