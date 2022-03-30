@@ -14,10 +14,12 @@ public class ToggleIntakeCommand extends CommandBase{
     @Override
     public void execute() {
         m_intake.setSpeed(speed);
+        m_intake.extend();
     }
 
     @Override
     public void end(boolean interruptible) {
         m_intake.setSpeed(0);
+        m_intake.retract();
     }
 }

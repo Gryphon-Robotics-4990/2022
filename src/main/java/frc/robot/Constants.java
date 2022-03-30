@@ -40,6 +40,9 @@ public final class Constants {
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
         public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 23;//used to be 10
         public static int CAN_PCM = 12;
+
+        public static int LEFT_SOLENOID_PORT = -1;
+        public static int RIGHT_SOLENOID_PORT = -1;
     }
 
     public static class MotorConfig {
