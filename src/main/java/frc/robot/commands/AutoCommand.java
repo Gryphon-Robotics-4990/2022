@@ -22,7 +22,7 @@ public class AutoCommand extends ParallelCommandGroup {
 
         int preShooterRunLength = 2;
         // Distance to move backwards (meters)
-        double distanceBack = -0.75;
+        double distanceBack = -1.5;
         ParallelRaceGroup driveCommand = getDriveBackCommand(distanceBack);
 
 
@@ -30,15 +30,12 @@ public class AutoCommand extends ParallelCommandGroup {
             new ShooterPIDCommand(shooter),
             new SequentialCommandGroup(
                 new ParallelCommandGroup(
-                    //driveCommand,
+                    driveCommand,
                     new SequentialCommandGroup(
+                        new TurretPositionCommand(turret),
                         new ParallelRaceGroup(
-                            new TurretPositionCommand(turret),
-                            new WaitCommand(5)
-                        ),
-                        new ParallelRaceGroup(
-                            //new WaitUntilCommand(() -> turret.isReady()),
-                            new WaitCommand(2),
+                            new WaitUntilCommand(() -> turret.isReady()),
+                            //new WaitCommand(2),
                             new LimelightTurretAimCommand(turret)
                         )
                     )
@@ -52,11 +49,13 @@ public class AutoCommand extends ParallelCommandGroup {
     }
 
     public ParallelRaceGroup getDriveBackCommand(double meters){
-        double percentSpeed = -0.5;
-        double linearSpeed = percentSpeed * SubsystemConfig.DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND;
-        //divide by (maxSpeed/2), which is 2.015 meters per second, so we get the duration we need
+        double percentSpeed = -0.2;
+        double linearSpeed = percentSpeed * SubsystemConfig.DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND;
+        System.out.println(SubsystemConfig.DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND);
+        System.out.println(linearSpeed);
+        // divide distance by speed, so we get the duration we need
         double duration = meters / linearSpeed;
-        System.out.println(duration);
+        System.out.println("Drive back time: " + Double.toString(duration));
         ParallelRaceGroup driveCommand = new ParallelRaceGroup(
             new WaitCommand(duration), 
             new DriveContinuous(m_drivetrain, percentSpeed, percentSpeed)

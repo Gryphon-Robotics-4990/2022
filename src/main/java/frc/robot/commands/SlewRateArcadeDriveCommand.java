@@ -6,14 +6,21 @@ import frc.robot.DriveUtil;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class TeleopArcadeDriveCommand extends CommandBase {
+public class SlewRateArcadeDriveCommand extends CommandBase {
 
     private final DrivetrainSubsystem m_drivetrain;
     private DoubleSupplier m_speedSupplier, m_rotationSupplier;
-
-    public TeleopArcadeDriveCommand(DrivetrainSubsystem drivetrain) {
+    //Slew rate values to stop tilting
+    //Higher = more responsiveness and more tipping
+    //Lower = less responsiveness and less tipping
+    //If it is to low, it just wont move unless you hold down the joystick for a while
+    //Too high = instant response and a lot of tipping
+    private SlewRateLimiter leftFilter = new SlewRateLimiter(1600);
+    private SlewRateLimiter rightFilter = new SlewRateLimiter(1600);
+    public SlewRateArcadeDriveCommand(DrivetrainSubsystem drivetrain) {
         m_drivetrain = drivetrain;
         addRequirements(drivetrain);
     }
@@ -32,7 +39,7 @@ public class TeleopArcadeDriveCommand extends CommandBase {
         speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         
         //m_drivetrain.driveRaw(speeds[0], speeds[1]);
-        m_drivetrain.driveRaw(speeds[0] * 0.4, speeds[1] * 0.4);
+        m_drivetrain.driveRaw(leftFilter.calculate(speeds[0]), rightFilter.calculate(speeds[1]));
     }
 
 }

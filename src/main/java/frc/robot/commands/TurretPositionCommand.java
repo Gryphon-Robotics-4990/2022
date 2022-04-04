@@ -12,19 +12,18 @@ public class TurretPositionCommand extends CommandBase {
     public TurretPositionCommand(TurretSubsystem turret) {
         m_turret = turret;
         addRequirements(turret);
-        
-        m_turret.setPositionDegrees(position);
+
     }
 
     //set motor speeds
-    /*@Override
+    @Override
     public void execute() {
         m_turret.setPositionDegrees(position);
-    }*/
+    }
 
     @Override
     public boolean isFinished() {
-        return false/*m_turret.isReady()*/;
+        return m_turret.isReady();
     }
 
     @Override

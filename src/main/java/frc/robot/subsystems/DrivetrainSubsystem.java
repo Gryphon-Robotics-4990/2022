@@ -89,6 +89,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         this.arcadeDrive(speeds[0], speeds[1]);
     }
 
+
     public double getDistanceLeft() {
         return m_leftFrontTalon.getSelectedSensorPosition() * /*Conversions.*/Units.DRIVETRAIN_ENCODER_DISTANCE_TO_METERS;
     }
@@ -175,6 +176,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
 
         NeutralMode mode = NeutralMode.Brake;
+        //NeutralMode mode = NeutralMode.Coast;
 
         //Brake mode so no coasting
         m_leftFrontTalon.setNeutralMode(mode);

@@ -18,15 +18,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private final WPI_TalonSRX m_intakeRight;
     private final DigitalInput m_breakbeam;
-    private final Compressor m_compressor;
-    private final Solenoid m_leftSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.LEFT_SOLENOID_PORT);
-    private final Solenoid m_rightSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.RIGHT_SOLENOID_PORT);
+    //private final Compressor m_compressor;
+    //private final Solenoid m_leftSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.LEFT_SOLENOID_PORT);
+    //private final Solenoid m_rightSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.RIGHT_SOLENOID_PORT);
 
     public IntakeSubsystem() {
         m_intakeRight = new WPI_TalonSRX(Ports.CAN_INTAKE_RIGHT_TALONSRX);
         m_breakbeam = new DigitalInput(Ports.DIO_BREAKBEAM);
-        m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        
+        //m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+        //m_leftSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.LEFT_SOLENOID_PORT);
+        //m_rightSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.RIGHT_SOLENOID_PORT);
+
         configureMotors();
     }
 
@@ -51,14 +53,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void extend()
     {
-        m_rightSolenoid.set(true);
-        m_leftSolenoid.set(true);
+        //m_rightSolenoid.set(true);
+        //m_leftSolenoid.set(true);
     }
 
     public void retract()
     {
-        m_rightSolenoid.set(false);
-        m_leftSolenoid.set(false);
+        //m_rightSolenoid.set(false);
+        //m_leftSolenoid.set(false);
     }
 
 

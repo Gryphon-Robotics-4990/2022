@@ -21,12 +21,12 @@ public class ShooterPOTestCommand extends CommandBase{
 
     @Override
     public void execute() {
-        m_shooter.shootPO(0, m_supplier.getAsDouble());
+        m_shooter.shootPO(m_supplier.getAsDouble());
     }
 
     @Override
     public void end(boolean interrupted) {
         double stop = 0;
-        m_shooter.shootPO(stop, stop);
+        m_shooter.shootPO(stop);
     }
 }

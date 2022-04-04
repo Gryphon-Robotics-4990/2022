@@ -15,8 +15,7 @@ public class LimelightShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double topSpeed = VisionController.ShooterVision.getShooterSpeedFromLimelight();
-        double bottomSpeed = 0;
-        m_shooter.shootPID(topSpeed, bottomSpeed);
+        double bottomSpeed = VisionController.ShooterVision.getShooterSpeedFromLimelight();
+        m_shooter.shootPID(bottomSpeed);
     }
 }

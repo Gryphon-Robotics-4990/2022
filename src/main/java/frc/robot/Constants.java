@@ -18,7 +18,7 @@ public final class Constants {
         //RoboRIO sensor ports
         
         //TODO find breakbeam port
-        public static int DIO_BREAKBEAM = 1;
+        public static int DIO_BREAKBEAM = 0;
 
         //Below is format for analog sensors
         //public static int PWM_NAME = -1;
@@ -36,13 +36,13 @@ public final class Constants {
         public static int CAN_INTAKE_RIGHT_TALONSRX = 8;
         public static int CAN_PRESHOOTER_TALONSRX = 7;
         //
-        public static int CAN_SHOOTER_TOP_TALONSRX = 10;//used to be 23
         public static int CAN_SHOOTER_LEFT_BOTTOM_TALONSRX = 11;
-        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 23;//used to be 10
+        public static int CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX = 23;
         public static int CAN_PCM = 12;
-
-        public static int LEFT_SOLENOID_PORT = -1;
-        public static int RIGHT_SOLENOID_PORT = -1;
+        
+        //AJ's air pressure magic:
+        public static int LEFT_SOLENOID_PORT = 0;
+        public static int RIGHT_SOLENOID_PORT = 1;
     }
 
     public static class MotorConfig {
@@ -58,7 +58,8 @@ public final class Constants {
         //TODO find robot physical characteristics
         public static double DRIVETRAIN_TRACKWIDTH = -1;
         public static double DRIVETRAIN_WHEEL_RADIUS = 3;
-        public static double DRIVETRAIN_WHEEL_RADIUS_METERS = DRIVETRAIN_WHEEL_RADIUS * Units.INCH.to(Units.METER);
+        public static double DRIVETRAIN_WHEEL_RADIUS_FT = 0.25;
+        public static double DRIVETRAIN_WHEEL_RADIUS_METERS = DRIVETRAIN_WHEEL_RADIUS_FT * Units.FEET.to(Units.METER);
         public static double DRIVETRAIN_TRACKWIDTH_METERS = -1;
         public static double TURRET_MOTOR_REDUCTION = 14; // x50 for versa gearbox, but turret is after the reduction
         public static double TALON_ENCODER_RESOLUTION = 4096;
@@ -76,13 +77,13 @@ public final class Constants {
         public static Unit METER = new BaseUnit(Dimension.Length, 1d);
         public static Unit KILOMETER = new BaseUnit(Dimension.Length, METER.getScalar() * 1000d);
         public static Unit FEET = new BaseUnit(Dimension.Length, METER.getScalar() * 3.280839895d);
-        public static Unit INCH = new BaseUnit(Dimension.Length, FEET.getScalar() *(1/12));
+        public static Unit INCH = new BaseUnit(Dimension.Length, FEET.getScalar() * (1/12));
 
         public static Unit SECOND = new BaseUnit(Dimension.Time, 1d);
         public static Unit MINUTE = new BaseUnit(Dimension.Time, SECOND.getScalar() * 60d);
         public static Unit HOUR = new BaseUnit(Dimension.Time, MINUTE.getScalar() * 60d);
         public static Unit MILLISECOND = new BaseUnit(Dimension.Time, SECOND.getScalar() / 1000d);
-        public static Unit ENCODER_TIME = new BaseUnit(Dimension.Time, MILLISECOND.getScalar() * 100d);
+        public static Unit ENCODER_TIME = new BaseUnit(Dimension.Time, SECOND.getScalar() / 10d);
         
         public static Unit KILOGRAM = new BaseUnit(Dimension.Mass, 1d);
 
@@ -95,8 +96,10 @@ public final class Constants {
         public static Unit AMPERE = new BaseUnit(Dimension.Current, 1d);
 
         //Compound units
-        public static Unit ENCODER_ANGULAR_VELOCITY = new CompoundUnit(ENCODER_ANGLE, ENCODER_TIME);
+        public static Unit ENCODER_VELOCITY_UNIT = new CompoundUnit(ENCODER_ANGLE, ENCODER_TIME);
+        public static Unit ENCODER_ANGULAR_VELOCITY = new CompoundUnit(ENCODER_ANGLE, SECOND);
 
+        public static Unit ANGULAR_VELOCITY = new CompoundUnit(RADIAN, SECOND);
         public static Unit METERS_PER_SECOND = new CompoundUnit(METER, SECOND);
 
         public static Unit METERS_PER_SECOND_2 = new CompoundUnit(METERS_PER_SECOND, SECOND);
@@ -122,12 +125,12 @@ public final class Constants {
 
         //Drivetrain movement information
         public static double DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY = 3450;//Approx 4.03 meters per second
-        public static double DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND = 3.95;//Max is ~4. RECACLULATIONS SHOW THIS VALUE SHOULD BE 0.395
-        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * /*Conversions.*/Units.ENCODER_ANGULAR_VELOCITY.to(Units.METERS_PER_SECOND);
+        public static double DRIVETRAIN_MAXIMUM_CRUISE_SPEED_METERS_PER_SECOND = 3.95;//Max is ~4.
+        public static double DRIVETRAIN_MAXIMUM_MOVEMENT_SPEED_METERS_PER_SECOND = RobotMeasurements.DRIVETRAIN_WHEEL_RADIUS_METERS * (DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY * 0.1 * Units.ENCODER_ANGULAR_VELOCITY.to(Units.ANGULAR_VELOCITY));
         public static double DRIVETRAIN_CLOSED_LOOP_RAMP = 0.1; //seconds from 0 to full or full to 0
         public static double DRIVETRAIN_STOP_THRESHOLD = -1; //if the robot exceeds this speed, it is not safe to shoot
 
-        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 500;
+        public static double TURRET_MAXIMUM_ALLOWED_ERROR = 100;
         public static double SHOOTER_MAXIMUM_ALLOWED_ERROR = 200;
         // During auto, how far we can be off the correct PID position
         public static double DRIVETRAIN_MAXIMUM_ALLOWED_ERROR = 200;
@@ -155,7 +158,7 @@ public final class Constants {
         public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(0.2, 0.0033, 12);
         public static TalonSRXGains DRIVETRAIN_RIGHT_PID = new TalonSRXGains(0.2, 0.0033, 12);
         //public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.45, 0.0001, 25);
-        public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.1, 0.0001, 5);
+        public static TalonSRXGains SHOOTER_BOTTOM_PID = new TalonSRXGains(0.1, 0.00005, 10);
         public static TalonSRXGains TURRET_OLD_PID = new TalonSRXGains(1, 0.00035, 5); // didn't work during SFR
         public static TalonSRXGains TURRET_PID = new TalonSRXGains(1, 0.00005, 16); // Don't ask
 
@@ -168,10 +171,11 @@ public final class Constants {
         
     }
  
-    //Miscellaneous
+    //Driver settings
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
-    public static double JOYSTICK_THROTTLE_EXPONENT = 13/8;//11/8;
-    public static double JOYSTICK_TURNING_EXPONENT = 13/8/*11/8*/;
+    //public static double JOYSTICK_THROTTLE_EXPONENT = 13/8;//11/8;
+    public static double JOYSTICK_THROTTLE_EXPONENT = 5/2;
+    public static double JOYSTICK_TURNING_EXPONENT = 11/8/*11/8*/;
     public static double JOYSTICK_OPERATOR_EXPONENT = 2;
 
     //Operation config
