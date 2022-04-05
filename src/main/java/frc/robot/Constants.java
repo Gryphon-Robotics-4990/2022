@@ -41,8 +41,7 @@ public final class Constants {
         public static int CAN_PCM = 12;
         
         //AJ's air pressure magic:
-        public static int LEFT_SOLENOID_PORT = 0;
-        public static int RIGHT_SOLENOID_PORT = 1;
+        public static int SOLENOID_PORT = 3;
     }
 
     public static class MotorConfig {
