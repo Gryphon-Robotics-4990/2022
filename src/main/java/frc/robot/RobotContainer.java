@@ -42,9 +42,10 @@ public class RobotContainer {
     private final AutoCommand m_autoCommand = new AutoCommand(m_drivetrain, m_preShooter, m_shooter, m_turret);
     private final SlewRateArcadeDriveCommand m_normalDrive = new SlewRateArcadeDriveCommand(m_drivetrain);
     private final IntakeChompLoopCommand m_intakeChomp = new IntakeChompLoopCommand(m_intake);
-
-    //private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
+    private final ToggleIntakeExtensionCommand m_intakeExtend = new ToggleIntakeExtensionCommand(m_intake);
     private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
+
+    
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Configure all the control bindings
@@ -53,56 +54,39 @@ public class RobotContainer {
     }
 
     private void configureControlBindings() {
-        
-        //Configure control in the same order as the subsystems (alphabetical)
-
-        //Drivetrain
-        // m_teleopArcadeDriveCommand.setSuppliers(
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_THROTTLE_EXPONENT),
-        //     () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_TURNING_EXPONENT)
-        // );
-
+        //Suppliers:
         m_normalDrive.setSuppliers(
             () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickLeftY), JOYSTICK_THROTTLE_EXPONENT),
             () -> DriveUtil.powCopySign(joystickDrive.getRawAxis(AxisF310.JoystickRightX), JOYSTICK_TURNING_EXPONENT)
 
         );
 
-
         m_turretManualCommand.setSupplier(
             () -> DriveUtil.powCopySign(joystickOperator.getRawAxis(AxisF310.JoystickLeftX), JOYSTICK_OPERATOR_EXPONENT)
         );
+    
+        //Button Bindings:
+        joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
+
+        joystickOperator.getButton(ButtonF310.BumperRight).whenPressed(m_fullShoot);
+
+        joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
+
+        joystickOperator.getButton(ButtonF310.A).toggleWhenPressed(m_intakeExtend);
 
         joystickOperator.getButton(ButtonF310.Y).toggleWhenPressed(m_turretManualCommand);
 
-        //joystickOperator.getButton(ButtonF310.A).toggleWhenPressed(m_preShooterCommand);
-
-        joystickOperator.getButton(ButtonF310.BumperRight).toggleWhenPressed(m_shooterPIDCommand);
-        joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
-
-        joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
-        joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
         //joystickOperator.getButton(ButtonF310.X).toggleWhenPressed(m_intakeChomp);
-        // Configures the switching between manual and automatic turret modes
-        // It's only possible to zero the turret when its button is pressed and the mode is toggled to manual control
-        // The turret manual command is automatically scheduled when manual mode is toggled
-        // When it's toggled off, the default limelight turret aiming command will run
-        
-        //TODO find button to zero turret
-        // joystickOperator.getButton(ButtonF310.Y).toggleWhenActive(m_turretManualCommand)
-        //     .and(joystickOperator.getButton(ButtonF310.B)).toggleWhenActive(m_zeroTurretCommand);
-        
-        //CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_teleopArcadeDriveCommand);
+
+        //Default Commands;
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_normalDrive);
+
         CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
-        //CommandScheduler.getInstance().setDefaultCommand(m_shooter, m_shooterPIDCommand);
     }
 
     public void setTeleopDefaultCommands() {
         //Put default command setters here once auto works
     }
-
-    
 
     public Command getAutonomousCommand() {
         // Moving backwards and shooting the ball we start with

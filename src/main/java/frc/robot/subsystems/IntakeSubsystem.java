@@ -43,6 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
         }
         SmartDashboard.putBoolean("Has Ball", hasBall());
         SmartDashboard.putBoolean("Intake On", isOn());
+        SmartDashboard.putBoolean("Intake Extended", m_solenoid.get());
     }
 
     public boolean hasBall() {
