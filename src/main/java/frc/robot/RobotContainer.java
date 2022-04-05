@@ -41,6 +41,7 @@ public class RobotContainer {
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
     private final AutoCommand m_autoCommand = new AutoCommand(m_drivetrain, m_preShooter, m_shooter, m_turret);
     private final SlewRateArcadeDriveCommand m_normalDrive = new SlewRateArcadeDriveCommand(m_drivetrain);
+    private final IntakeChompLoopCommand m_intakeChomp = new IntakeChompLoopCommand(m_intake);
 
     //private final AutoMoveShootBallCommand m_autoMoveShootBallCommand = new AutoMoveShootBallCommand(m_drivetrain, m_shooter,  m_turret, m_preShooter);
     private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
@@ -81,6 +82,7 @@ public class RobotContainer {
 
         joystickOperator.getButton(ButtonF310.BumperLeft).toggleWhenPressed(m_regurgitationCommand);
         joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
+        //joystickOperator.getButton(ButtonF310.X).toggleWhenPressed(m_intakeChomp);
         // Configures the switching between manual and automatic turret modes
         // It's only possible to zero the turret when its button is pressed and the mode is toggled to manual control
         // The turret manual command is automatically scheduled when manual mode is toggled
