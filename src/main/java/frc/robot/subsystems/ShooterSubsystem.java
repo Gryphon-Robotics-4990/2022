@@ -14,7 +14,8 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         //The top and right bottom talons use their own PID, but the bottom left just follows the bottom right.
         m_rightBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_RIGHT_BOTTOM_TALONSRX);
-        m_leftBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_LEFT_BOTTOM_TALONSRX);
+        // Left shooter had wiring issue
+        //m_leftBottomTalon = new WPI_TalonSRX(Ports.CAN_SHOOTER_LEFT_BOTTOM_TALONSRX);
 
         configureMotors();
         m_rightBottomTalon.setSelectedSensorPosition(0);
@@ -63,16 +64,16 @@ public class ShooterSubsystem extends SubsystemBase {
         
         //First setup talons with default settings
         m_rightBottomTalon.configFactoryDefault();
-        m_leftBottomTalon.configFactoryDefault();
+        //m_leftBottomTalon.configFactoryDefault();
 
         
         m_rightBottomTalon.setSensorPhase(false);
 
         // Driving shooter motors in different directions
         m_rightBottomTalon.setInverted(false);
-        m_leftBottomTalon.setInverted(true);
+        //m_leftBottomTalon.setInverted(true);
 
-        m_leftBottomTalon.follow(m_rightBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
+        //m_leftBottomTalon.follow(m_rightBottomTalon, MotorConfig.DEFAULT_MOTOR_FOLLOWER_TYPE);
 
         m_rightBottomTalon.configSelectedFeedbackSensor(MotorConfig.TALON_DEFAULT_FEEDBACK_DEVICE, MotorConfig.TALON_DEFAULT_PID_ID, MotorConfig.TALON_TIMEOUT_MS);
         
@@ -81,7 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
         cBottom.slot0 = MotionControl.SHOOTER_BOTTOM_PID;
 
         m_rightBottomTalon.setNeutralMode(NeutralMode.Brake);
-        m_leftBottomTalon.setNeutralMode(NeutralMode.Brake);
+        //m_leftBottomTalon.setNeutralMode(NeutralMode.Brake);
 
         //Configure talons
         m_rightBottomTalon.configAllSettings(cBottom);
