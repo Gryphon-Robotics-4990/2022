@@ -24,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
         m_intakeRight = new WPI_TalonSRX(Ports.CAN_INTAKE_RIGHT_TALONSRX);
         m_breakbeam = new DigitalInput(Ports.DIO_BREAKBEAM);
+        // We don't really need the Compressor object but keeping it for now
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
         m_solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.SOLENOID_PORT);
         configureMotors();
@@ -35,12 +36,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (m_compressor.getPressureSwitchValue() == true)
-        {
-            m_compressor.disable();
-        }else{
-            m_compressor.enableDigital();
-        }
         SmartDashboard.putBoolean("Has Ball", hasBall());
         SmartDashboard.putBoolean("Intake On", isOn());
         SmartDashboard.putBoolean("Intake Extended", m_solenoid.get());
