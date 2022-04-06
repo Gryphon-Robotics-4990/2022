@@ -45,8 +45,7 @@ public class CompoundUnit implements Unit {
     }
 
     @Override
-    public double to(Unit to) throws UnitDimensionException {
-        if (! to.getDimension().equals(dimensions)) throw new UnitDimensionException();
+    public double to(Unit to) {
         return scalar / to.getScalar();
     }
 
