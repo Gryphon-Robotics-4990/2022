@@ -174,7 +174,7 @@ public final class Constants {
     public static double JOYSTICKF310_AXIS_DEADBAND = 0.05;
     //public static double JOYSTICK_THROTTLE_EXPONENT = 13/8;//11/8;
     public static double JOYSTICK_THROTTLE_EXPONENT = 5/2;
-    public static double JOYSTICK_TURNING_EXPONENT = 11/8/*11/8*/;
+    public static double JOYSTICK_TURNING_EXPONENT = 13/8/*11/8*/;
     public static double JOYSTICK_OPERATOR_EXPONENT = 2;
 
     //Operation config

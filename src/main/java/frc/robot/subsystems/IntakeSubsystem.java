@@ -26,6 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
         m_breakbeam = new DigitalInput(Ports.DIO_BREAKBEAM);
         // We don't really need the Compressor object but keeping it for now
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+        m_compressor.enableDigital();
         m_solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Ports.SOLENOID_PORT);
         configureMotors();
     }
