@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putBoolean("Has Ball", hasBall());
         SmartDashboard.putBoolean("Intake On", isOn());
-        SmartDashboard.putBoolean("Intake Extended", m_solenoid.get());
+        SmartDashboard.putBoolean("Intake Extended", isExtended());
     }
 
     public boolean hasBall() {
@@ -49,6 +49,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public boolean isOn() {
         return m_intakeRight.getMotorOutputPercent() != 0;
+    }
+
+    public boolean isExtended() {
+        return m_solenoid.get();
     }
 
     public void extend()

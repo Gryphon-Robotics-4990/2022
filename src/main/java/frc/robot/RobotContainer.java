@@ -25,7 +25,6 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooter = new ShooterSubsystem();
     private final TurretSubsystem m_turret = new TurretSubsystem();
     private final PreShooterSubsystem m_preShooter = new PreShooterSubsystem();
-    //private final PneumaticIntakeSubsystem m_pneumaticIntake = new PneumaticIntakeSubsystem();
     //Create Commands
     private final TeleopArcadeDriveCommand m_teleopArcadeDriveCommand = new TeleopArcadeDriveCommand(m_drivetrain);
     //private final FlywheelPrototypeTestCommand m_flywheelPrototypeTestCommand = new FlywheelPrototypeTestCommand(m_drivetrain);
@@ -41,8 +40,6 @@ public class RobotContainer {
     private final ShooterPIDCommand m_shooterPIDCommand = new ShooterPIDCommand(m_shooter);
     private final AutoCommand m_autoCommand = new AutoCommand(m_drivetrain, m_preShooter, m_shooter, m_turret);
     private final SlewRateArcadeDriveCommand m_normalDrive = new SlewRateArcadeDriveCommand(m_drivetrain);
-    //private final IntakeChompLoopCommand m_intakeChomp = new IntakeChompLoopCommand(m_intake);
-    //private final ToggleIntakeExtensionCommand m_intakeExtend = new ToggleIntakeExtensionCommand(m_pneumaticIntake);
     private final FullShootCommand m_fullShoot = new FullShootCommand(m_shooter, m_preShooter);
 
     
@@ -71,12 +68,8 @@ public class RobotContainer {
         joystickOperator.getButton(ButtonF310.A).whenPressed(m_fullShoot);
 
         joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_toggleIntakeCommand);
-        //joystickOperator.getButton(ButtonF310.B).toggleWhenPressed(m_intakeExtend);
-        //joystickOperator.getButton(ButtonF310.A).toggleWhenPressed(m_intakeExtend/*new StartEndCommand(m_intake::extend, m_intake::retract)*/);
 
         joystickOperator.getButton(ButtonF310.Y).toggleWhenPressed(m_turretManualCommand);
-
-        //joystickOperator.getButton(ButtonF310.X).toggleWhenPressed(m_intakeChomp);
 
         //Default Commands;
         CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_normalDrive);
