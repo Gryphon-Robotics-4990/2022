@@ -7,7 +7,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterPIDCommand extends CommandBase {
     private final ShooterSubsystem m_shooterSubsystem;
     // Once we PID tune
-    private final double bottomSpeed = 25000;//28000 is good, 30000 maybe too high 25000 set by Declan on load in day
+    private final double bottomSpeed = 26500;//28000 is good, 30000 maybe too high 25000 set by Declan on load in day
 
     public ShooterPIDCommand(ShooterSubsystem shooter) {
         m_shooterSubsystem = shooter;

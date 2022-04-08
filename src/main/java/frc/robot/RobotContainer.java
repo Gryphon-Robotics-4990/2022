@@ -71,15 +71,13 @@ public class RobotContainer {
 
         joystickOperator.getButton(ButtonF310.Y).toggleWhenPressed(m_turretManualCommand);
 
-        //Default Commands;
-        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_normalDrive);
-
-        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
-        //m_intake.extend();
     }
 
     public void setTeleopDefaultCommands() {
         //Put default command setters here once auto works
+        //Default Commands;
+        CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_normalDrive);
+        CommandScheduler.getInstance().setDefaultCommand(m_turret, m_limelightTurretAimCommand);
     }
 
     public Command getAutonomousCommand() {

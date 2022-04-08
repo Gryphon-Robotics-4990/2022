@@ -23,7 +23,7 @@ public class TurretPositionCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_turret.isReady();
+        return false;//m_turret.isReady();
     }
 
     @Override

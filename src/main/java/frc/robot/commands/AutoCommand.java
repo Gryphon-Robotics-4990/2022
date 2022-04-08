@@ -27,17 +27,26 @@ public class AutoCommand extends ParallelCommandGroup {
 
 
         addCommands(
-            new ShooterPIDCommand(shooter),
+            // Keep the shooter running for first 4 sec of auto
+            // TODO stop shooter after ball shoots
+            new ParallelRaceGroup(
+                new ShooterPIDCommand(shooter),
+                new WaitCommand(4)
+            ),
             new SequentialCommandGroup(
                 new ParallelCommandGroup(
                     driveCommand,
                     new SequentialCommandGroup(
-                        new TurretPositionCommand(turret),
                         new ParallelRaceGroup(
-                            new WaitUntilCommand(() -> turret.isReady()),
-                            //new WaitCommand(2),
-                            new LimelightTurretAimCommand(turret)
+                            new TurretPositionCommand(turret),
+                            new WaitCommand(1)
                         )
+                        // FOR LIMELIGHT:
+                        // new ParallelRaceGroup(
+                        //     //new WaitUntilCommand(() -> turret.isReady()),
+                        //     new WaitCommand(2),
+                        //     new LimelightTurretAimCommand(turret)
+                        // )
                     )
                 ),
                 new ParallelRaceGroup(

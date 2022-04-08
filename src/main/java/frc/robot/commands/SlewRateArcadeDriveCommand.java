@@ -18,8 +18,8 @@ public class SlewRateArcadeDriveCommand extends CommandBase {
     //Lower = less responsiveness and less tipping
     //If it is to low, it just wont move unless you hold down the joystick for a while
     //Too high = instant response and a lot of tipping
-    private SlewRateLimiter leftFilter = new SlewRateLimiter(1600);
-    private SlewRateLimiter rightFilter = new SlewRateLimiter(1600);
+    private SlewRateLimiter leftFilter = new SlewRateLimiter(4096);
+    private SlewRateLimiter rightFilter = new SlewRateLimiter(4096);
     public SlewRateArcadeDriveCommand(DrivetrainSubsystem drivetrain) {
         m_drivetrain = drivetrain;
         addRequirements(drivetrain);
