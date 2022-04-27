@@ -12,7 +12,7 @@ import frc.robot.subsystems.TurretSubsystem;
 import static frc.robot.Constants.*;
 
 
-public class AutoCommand extends ParallelCommandGroup {
+public class AutoCommand extends SequentialCommandGroup {
 
     private final DrivetrainSubsystem m_drivetrain;
 
@@ -20,40 +20,34 @@ public class AutoCommand extends ParallelCommandGroup {
     public AutoCommand(DrivetrainSubsystem drive, PreShooterSubsystem preShooter, ShooterSubsystem shooter, TurretSubsystem turret) {
         m_drivetrain = drive;
 
-        int preShooterRunLength = 2;
         // Distance to move backwards (meters)
-        double distanceBack = -1.5;
+        double distanceBack = -0.75;
         ParallelRaceGroup driveCommand = getDriveBackCommand(distanceBack);
-
-
+        ParallelRaceGroup driveTaxiCommand = getDriveBackCommand(-2);
+        // 1. Drive backwards and adjust turret together
+        // 2. Shoot ball (spins up shooter and then runs pre shooter)
         addCommands(
-            // Keep the shooter running for first 4 sec of auto
-            // TODO stop shooter after ball shoots
-            new ParallelRaceGroup(
-                new ShooterPIDCommand(shooter),
-                new WaitCommand(4)
-            ),
-            new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                    driveCommand,
-                    new SequentialCommandGroup(
-                        new ParallelRaceGroup(
-                            new TurretPositionCommand(turret),
-                            new WaitCommand(1)
-                        )
-                        // FOR LIMELIGHT:
-                        // new ParallelRaceGroup(
-                        //     //new WaitUntilCommand(() -> turret.isReady()),
-                        //     new WaitCommand(2),
-                        //     new LimelightTurretAimCommand(turret)
-                        // )
+            new ParallelCommandGroup(
+                // delay before we start, in case another team needs it
+                new SequentialCommandGroup(
+                    new WaitCommand(2),
+                    driveCommand
+                ),               
+                new SequentialCommandGroup(
+                    new ParallelRaceGroup(
+                        new TurretPositionCommand(turret),
+                        new WaitCommand(1)
                     )
-                ),
-                new ParallelRaceGroup(
-                    new PreShooterCommand(preShooter), 
-                    new WaitCommand(preShooterRunLength)
+                    // FOR LIMELIGHT:
+                    // new ParallelRaceGroup(
+                    //     //new WaitUntilCommand(() -> turret.isReady()),
+                    //     new WaitCommand(2),
+                    //     new LimelightTurretAimCommand(turret)
+                    // )
                 )
-            )
+            ),
+            new FullShootCommandAuto(shooter, preShooter),
+            driveTaxiCommand
         );
     }
 

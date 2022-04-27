@@ -13,10 +13,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PreShooterSubsystem;
 
 
-public class FullShootCommand extends ParallelRaceGroup {
+public class FullShootCommandAuto extends ParallelRaceGroup {
     
-    public FullShootCommand(ShooterSubsystem shooter, PreShooterSubsystem preShooter) {
-        ShooterPIDCommand shoot = new ShooterPIDCommand(shooter);
+    public FullShootCommandAuto(ShooterSubsystem shooter, PreShooterSubsystem preShooter) {
+        ShooterPIDCommandAuto shoot = new ShooterPIDCommandAuto(shooter);
         PreShooterCommand preShoot = new PreShooterCommand(preShooter);
         
         addCommands(
@@ -26,7 +26,7 @@ public class FullShootCommand extends ParallelRaceGroup {
             new SequentialCommandGroup(
                 // Once we PID tune, the isReady() will work
                 /*new WaitUntilCommand(() -> shooter.isReady()),*/
-                new WaitCommand(1),
+                new WaitCommand(2.5),
                 new ParallelRaceGroup(new WaitCommand(2), preShoot)
             )
         );

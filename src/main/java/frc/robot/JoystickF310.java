@@ -9,7 +9,9 @@ import static frc.robot.Constants.*;
 
 public class JoystickF310 extends Joystick {
     
-	public JoystickF310(int joystickNumber) { super(joystickNumber); }
+	public JoystickF310(int joystickNumber) { 
+		super(joystickNumber); 
+	}
 
 	public Button getButton(ButtonF310 button) {
 		return new JoystickButton(this, button.ordinal());

@@ -19,6 +19,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
         configureMotors();
         m_rightBottomTalon.setSelectedSensorPosition(0);
+        m_rightBottomTalon.configPeakCurrentLimit(30);
+        m_leftBottomTalon.configPeakCurrentLimit(30);
     }
 
     @Override

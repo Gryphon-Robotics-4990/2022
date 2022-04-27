@@ -18,8 +18,10 @@ public class SlewRateArcadeDriveCommand extends CommandBase {
     //Lower = less responsiveness and less tipping
     //If it is to low, it just wont move unless you hold down the joystick for a while
     //Too high = instant response and a lot of tipping
-    private SlewRateLimiter leftFilter = new SlewRateLimiter(4096);
-    private SlewRateLimiter rightFilter = new SlewRateLimiter(4096);
+    double slew = 2900;
+    double slewPO = 2.65;
+    private SlewRateLimiter leftFilter = new SlewRateLimiter(slewPO);
+    private SlewRateLimiter rightFilter = new SlewRateLimiter(slewPO);
     public SlewRateArcadeDriveCommand(DrivetrainSubsystem drivetrain) {
         m_drivetrain = drivetrain;
         addRequirements(drivetrain);
@@ -35,11 +37,16 @@ public class SlewRateArcadeDriveCommand extends CommandBase {
         double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble() * ARCADE_SPEED_MULTIPLIER, m_rotationSupplier.getAsDouble() * ARCADE_ROTATION_MULTIPLIER);
         // Convert speeds to target speeds in meters per second, and then divide by hypothetical maximum movement speed
         // Proportion of max speed
-        speeds[0] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
-        speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
+        //speeds[0] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
+        //speeds[1] *= SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY;
         
         //m_drivetrain.driveRaw(speeds[0], speeds[1]);
-        m_drivetrain.driveRaw(leftFilter.calculate(speeds[0]), rightFilter.calculate(speeds[1]));
+        //FOR SLEW:
+        //m_drivetrain.driveRaw(leftFilter.calculate(speeds[0]), rightFilter.calculate(speeds[1]));
+        //FOR NON SLEW PO:
+        //m_drivetrain.drivePO(speeds[0], speeds[1]);
+        //FOR SLEW PO
+        m_drivetrain.drivePO(leftFilter.calculate(speeds[0]), rightFilter.calculate(speeds[1]));
     }
 
 }

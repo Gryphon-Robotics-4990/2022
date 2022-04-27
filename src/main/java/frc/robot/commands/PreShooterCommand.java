@@ -4,7 +4,7 @@ import frc.robot.subsystems.PreShooterSubsystem;
 
 public class PreShooterCommand extends CommandBase{
     private final PreShooterSubsystem m_preShooter;
-    private double speed = 0.5;
+    private double speed = 0.8;
 
     // Constructor
     public PreShooterCommand(PreShooterSubsystem preShooter) {

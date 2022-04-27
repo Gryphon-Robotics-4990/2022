@@ -175,8 +175,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         //cLeft.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
         //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
 
-        NeutralMode mode = NeutralMode.Brake;
-        //NeutralMode mode = NeutralMode.Coast;
+        //NeutralMode mode = NeutralMode.Brake;
+        NeutralMode mode = NeutralMode.Coast;
 
         //Brake mode so no coasting
         m_leftFrontTalon.setNeutralMode(mode);

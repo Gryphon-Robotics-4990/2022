@@ -40,6 +40,7 @@ public class IntakeSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Has Ball", hasBall());
         SmartDashboard.putBoolean("Intake On", isOn());
         SmartDashboard.putBoolean("Intake Extended", isExtended());
+        SmartDashboard.putBoolean("Compressor Enabled", m_compressor.enabled());
     }
 
     public boolean hasBall() {
@@ -63,6 +64,15 @@ public class IntakeSubsystem extends SubsystemBase {
     public void retract()
     {
         m_solenoid.set(false);
+    }
+
+    public void stopCompressor()
+    {
+        m_compressor.disable();
+    }
+
+    public void startAnalogCompressor(){
+        m_compressor.enableDigital();
     }
 
 

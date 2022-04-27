@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveContinuous extends CommandBase {
 
     private final DrivetrainSubsystem m_drivetrain;
-    private final double speedLeft;
-    private final double speedRight;
-    public DriveContinuous(DrivetrainSubsystem drivetrain, double speedLeft, double speedRight) {
+    private final double percentLeft;
+    private final double percentRight;
+    public DriveContinuous(DrivetrainSubsystem drivetrain, double percentLeft, double percentRight) {
         m_drivetrain = drivetrain;
         addRequirements(drivetrain);
         
-        this.speedLeft = speedLeft;
-        this.speedRight = speedRight;
+        this.percentLeft = percentLeft;
+        this.percentRight = percentRight;
     }
 
     @Override
     public void execute() {
-        m_drivetrain.driveRaw(speedLeft * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY, speedRight * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY);
+        m_drivetrain.driveRaw(percentLeft * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY, percentRight * SubsystemConfig.DRIVETRAIN_MAXIMUM_TESTED_ENCODER_VELOCITY);
     }
 
     @Override
