@@ -57,9 +57,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Velocity", getVelocityLeft());
         SmartDashboard.putBoolean("Drivetrain Stopped", drivetrainReadyToShoot());
     }
+    
     //Assumes left and right are in encoder units per 100ms
     public void driveRaw(double left, double right) {
-        //TODO Add acceleration to feedforward?
         m_leftFrontTalon.set(ControlMode.Velocity, left);
         m_rightFrontTalon.set(ControlMode.Velocity, right);
     }
