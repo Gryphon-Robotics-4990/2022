@@ -169,16 +169,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         //Setup config objects with desired values
         cLeft.slot0 = MotionControl.DRIVETRAIN_LEFT_PID;
         cRight.slot0 = MotionControl.DRIVETRAIN_RIGHT_PID;
-
-        //Not sure if the two below are strictly necessary
-        // How quickly to apply the power
-        //cLeft.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-        //cRight.closedloopRamp = SubsystemConfig.DRIVETRAIN_CLOSED_LOOP_RAMP;
-
-        //NeutralMode mode = NeutralMode.Brake;
+        
         NeutralMode mode = NeutralMode.Coast;
-
-        //Brake mode so no coasting
+        
         m_leftFrontTalon.setNeutralMode(mode);
         m_leftRearTalon.setNeutralMode(mode);
         m_rightFrontTalon.setNeutralMode(mode);
