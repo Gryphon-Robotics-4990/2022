@@ -10,9 +10,9 @@ public class ShooterPIDCommand extends CommandBase {
     // Once we PID tune
     // Upper Hub
     //private final double bottomSpeed = 27000;//28000 is good, 30000 maybe too high 25000 set by Declan on load in day
-    //private final double bottomSpeed = 28000;
+    private final double bottomSpeed = 24000;
     // Lower Hub
-    private final double bottomSpeed = 12000;
+    //private final double bottomSpeed = 12000;
     public ShooterPIDCommand(ShooterSubsystem shooter) {
         m_shooterSubsystem = shooter;
         addRequirements(shooter);

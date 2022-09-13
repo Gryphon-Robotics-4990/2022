@@ -10,7 +10,7 @@ public class PreShooterBurstCommand extends ParallelRaceGroup{
     public PreShooterBurstCommand(PreShooterSubsystem preShooter) {
         addCommands(
             new PreShooterCommand(preShooter),
-            new WaitCommand(0.2)
+            new WaitCommand(1.5)
         );       
     }
 }

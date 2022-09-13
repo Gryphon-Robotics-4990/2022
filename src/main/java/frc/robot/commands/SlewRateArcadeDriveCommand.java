@@ -18,7 +18,7 @@ public class SlewRateArcadeDriveCommand extends CommandBase {
     //Lower = less responsiveness and less tipping
     //If it is to low, it just wont move unless you hold down the joystick for a while
     //Too high = instant response and a lot of tipping
-    double slew = 2900;
+    double slew = 2000;
     double slewPO = 2.65;
     private SlewRateLimiter leftFilter = new SlewRateLimiter(slewPO);
     private SlewRateLimiter rightFilter = new SlewRateLimiter(slewPO);

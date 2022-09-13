@@ -180,10 +180,10 @@ public final class Constants {
 
     //Operation config
     //@Config(name = "Rotation Input Multiplier", tabName = "Op Configuration")
-    public static double ARCADE_ROTATION_MULTIPLIER = 0.5;
+    public static double ARCADE_ROTATION_MULTIPLIER = 0.35;
 
     //@Config(name = "Speed Input Multiplier", tabName = "Op Configuration")
-    public static double ARCADE_SPEED_MULTIPLIER = 1;
+    public static double ARCADE_SPEED_MULTIPLIER = 0.45;
 
     //@Config(name = "Intake Motor Speed", tabName = "Op Configuration")
     public static double INTAKE_MOTOR_SPEED = 0.4;
