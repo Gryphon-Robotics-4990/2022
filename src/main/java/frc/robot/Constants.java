@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -26,12 +27,12 @@ public final class Constants {
     public static int RIGHT_REAR_TALON_ID = 15;
 
     //PID Variables
-    public static double leftP = 0;
-    public static double leftI = 0;
-    public static double leftD = 0;
-    public static double rightP = 0;
-    public static double rightI = 0;
-    public static double rightD = 0;
+    public static double leftP = 0.2;
+    public static double leftI = 0.033;
+    public static double leftD = 12;
+    public static double rightP = 0.2;
+    public static double rightI = 0.033;
+    public static double rightD = 12;
 
     //PID Controllers
     public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(leftP, leftI, leftD);
@@ -43,4 +44,14 @@ public final class Constants {
     public static double TALON_ENCODER_RESOLUTION = 4096;
     public static int TALON_DEFAULT_PID_ID = 0;
     public static TalonSRXFeedbackDevice TALON_DEFAULT_FEEDBACK_DEVICE = TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative;
+
+    public static class TalonSRXGains extends SlotConfiguration {
+
+        public TalonSRXGains(double kP, double kI, double kD) {
+            super();
+            this.kP = kP;
+            this.kI = kI;
+            this.kD = kD;
+        }
+    }
 }

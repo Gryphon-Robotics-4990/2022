@@ -34,7 +34,7 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble(), m_rotationSupplier.getAsDouble() * 0.4);
-    m_drivetrainSubsystem.drivePO(speeds[0], speeds[1]);
+    m_drivetrainSubsystem.driveVelocity(speeds[0], speeds[1]);
     
   }
 
