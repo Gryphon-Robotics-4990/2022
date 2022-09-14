@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -33,6 +35,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_rightFrontTalon.set(ControlMode.PercentOutput, right);
     }
 
+    public void driveVelocity(double left, double right) {
+        m_leftFrontTalon.set(ControlMode.Velocity, left);
+        m_rightFrontTalon.set(ControlMode.Velocity, right);
+    }
+
     private void configureMotors() {
         
         //First setup talons with default settings
@@ -40,14 +47,31 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_leftRearTalon.configFactoryDefault();
         m_rightFrontTalon.configFactoryDefault();
         m_rightRearVictor.configFactoryDefault();
-
+        
+        m_leftFrontTalon.setSensorPhase(true);
+        m_rightFrontTalon.setSensorPhase(true);
 
         m_rightFrontTalon.setInverted(true);
         m_rightRearVictor.setInverted(true);
-        
 
         m_leftRearTalon.follow(m_leftFrontTalon, FollowerType.PercentOutput);
         m_rightRearVictor.follow(m_rightFrontTalon, FollowerType.PercentOutput);
+
+        m_leftFrontTalon.configSelectedFeedbackSensor(Constants.TALON_DEFAULT_FEEDBACK_DEVICE, Constants.TALON_DEFAULT_PID_ID, 5);
+        m_rightFrontTalon.configSelectedFeedbackSensor(Constants.TALON_DEFAULT_FEEDBACK_DEVICE, Constants.TALON_DEFAULT_PID_ID, 5);
+        
+        TalonSRXConfiguration cLeft = new TalonSRXConfiguration();
+        TalonSRXConfiguration cRight = new TalonSRXConfiguration();
+
+        NeutralMode mode = NeutralMode.Coast;
+        m_leftFrontTalon.setNeutralMode(mode);
+        m_rightFrontTalon.setNeutralMode(mode);
+        m_leftRearTalon.setNeutralMode(mode);
+        m_rightRearVictor.setNeutralMode(mode);
+
+        m_leftFrontTalon.configAllSettings(cLeft);
+        m_rightFrontTalon.configAllSettings(cRight);
+        
     }
 }
 
