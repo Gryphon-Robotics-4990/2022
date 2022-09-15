@@ -33,7 +33,7 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble(), m_rotationSupplier.getAsDouble() * 0.4);
+    double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble() * 3000, m_rotationSupplier.getAsDouble() * 0.4 * 3000);
     m_drivetrainSubsystem.driveVelocity(speeds[0], speeds[1]);
     
   }

@@ -63,6 +63,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         TalonSRXConfiguration cLeft = new TalonSRXConfiguration();
         TalonSRXConfiguration cRight = new TalonSRXConfiguration();
 
+        cLeft.slot0 = Constants.DRIVETRAIN_LEFT_PID;
+        cRight.slot0 = Constants.DRIVETRAIN_RIGHT_PID;
+
         NeutralMode mode = NeutralMode.Coast;
         m_leftFrontTalon.setNeutralMode(mode);
         m_rightFrontTalon.setNeutralMode(mode);

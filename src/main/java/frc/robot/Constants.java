@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 
@@ -27,12 +28,12 @@ public final class Constants {
     public static int RIGHT_REAR_TALON_ID = 15;
 
     //PID Variables
-    public static double leftP = 0.2;
-    public static double leftI = 0.033;
-    public static double leftD = 12;
-    public static double rightP = 0.2;
-    public static double rightI = 0.033;
-    public static double rightD = 12;
+    public static double leftP = 0.7;
+    public static double leftI = 0.007;
+    public static double leftD = 7;
+    public static double rightP = 0.7;
+    public static double rightI = 0.007;
+    public static double rightD = 7;
 
     //PID Controllers
     public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(leftP, leftI, leftD);
