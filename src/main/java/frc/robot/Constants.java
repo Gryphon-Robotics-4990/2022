@@ -28,10 +28,10 @@ public final class Constants {
     public static int RIGHT_REAR_TALON_ID = 15;
 
     //PID Variables
-    public static double leftP = 0.7;
+    public static double leftP = 1;
     public static double leftI = 0.007;
     public static double leftD = 7;
-    public static double rightP = 0.7;
+    public static double rightP = 1;
     public static double rightI = 0.007;
     public static double rightD = 7;
 

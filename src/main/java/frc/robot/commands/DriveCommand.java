@@ -9,6 +9,7 @@ import frc.robot.DriveUtil;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 /** An example command that uses an example subsystem. */
@@ -19,6 +20,8 @@ public class DriveCommand extends CommandBase {
 
   private DoubleSupplier m_speedSupplier;
   private DoubleSupplier m_rotationSupplier;
+  
+  SlewRateLimiter filter = new SlewRateLimiter(10000);
   
 
 
@@ -33,8 +36,9 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double[] speeds = DriveUtil.arcadeToTankDrive(m_speedSupplier.getAsDouble() * 3000, m_rotationSupplier.getAsDouble() * 0.4 * 3000);
+    double[] speeds = DriveUtil.arcadeToTankDrive(filter.calculate(m_speedSupplier.getAsDouble() * 3000), m_rotationSupplier.getAsDouble() * 0.2 * 3000);
     m_drivetrainSubsystem.driveVelocity(speeds[0], speeds[1]);
+    
     
   }
 
