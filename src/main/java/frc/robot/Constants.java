@@ -24,16 +24,16 @@ public final class Constants {
     //Device IDs
     public static int LEFT_FRONT_TALON_ID = 10;
     public static int LEFT_REAR_TALON_ID = 5;
-    public static int RIGHT_FRONT_TALON_ID = 13;
-    public static int RIGHT_REAR_TALON_ID = 15;
+    public static int RIGHT_FRONT_TALON_ID = 15;
+    public static int RIGHT_REAR_TALON_ID = 13;
 
     //PID Variables
-    public static double leftP = 1;
-    public static double leftI = 0.007;
-    public static double leftD = 7;
-    public static double rightP = 1;
-    public static double rightI = 0.007;
-    public static double rightD = 7;
+    public static double leftP = 0.2;
+    public static double leftI = 0.0033;
+    public static double leftD = 12;
+    public static double rightP = 0.2;
+    public static double rightI = 0.0033;
+    public static double rightD = 12;
 
     //PID Controllers
     public static TalonSRXGains DRIVETRAIN_LEFT_PID = new TalonSRXGains(leftP, leftI, leftD);

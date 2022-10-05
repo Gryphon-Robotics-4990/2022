@@ -7,6 +7,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,20 +20,36 @@ import frc.robot.Constants;
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   private final WPI_TalonSRX m_leftFrontTalon, m_leftRearTalon, m_rightFrontTalon, m_rightRearTalon;
+  private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  private final DifferentialDriveOdometry m_odometry;
   private final Constants constants = new Constants();
+  private Field2d m_field = new Field2d();
+
     public DrivetrainSubsystem() {
         m_leftFrontTalon = new WPI_TalonSRX(constants.LEFT_FRONT_TALON_ID);
         m_leftRearTalon = new WPI_TalonSRX(constants.LEFT_REAR_TALON_ID);
         m_rightFrontTalon = new WPI_TalonSRX(constants.RIGHT_FRONT_TALON_ID);
         m_rightRearTalon = new WPI_TalonSRX(constants.RIGHT_REAR_TALON_ID);
 
+        m_odometry = new DifferentialDriveOdometry(getGyroHeading(), new Pose2d(5.0, 13.5, new Rotation2d()));
+        gyro.reset();
+        m_rightFrontTalon.setSelectedSensorPosition(0);
+        m_leftFrontTalon.setSelectedSensorPosition(0);
+        SmartDashboard.putData("Field", m_field);
+
         configureMotors();
+    }
+
+    private Rotation2d getGyroHeading() {
+        return gyro.getRotation2d();
     }
 
     @Override
     public void periodic()
     {
-
+        var gyroAngle = Rotation2d.fromDegrees(-gyro.getAngle());
+        //m_odometry.update();
+        m_field.setRobotPose(m_odometry.update(gyroAngle, m_leftFrontTalon.getSelectedSensorPosition(), m_rightFrontTalon.getSelectedSensorPosition()));
     }
 
     public void drivePO(double left, double right) {

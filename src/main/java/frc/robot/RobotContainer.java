@@ -40,8 +40,8 @@ public class RobotContainer {
   
   private void configureButtonBindings() {
     m_driveCommand.setSuppliers(
-      () -> DriveUtil.powCopySign(-joystick.getRawAxis(1), 1),
-      () -> DriveUtil.powCopySign(joystick.getRawAxis(2), 1)
+      () -> DriveUtil.powCopySign(-joystick.getRawAxis(5), 1),
+      () -> DriveUtil.powCopySign(joystick.getRawAxis(0), 1)
     );
     //m_drivetrainSubsystem.drivePO(new Joystick(2)getRawAxis(1), new Joystick(2).getRawAxis(1));
     //m_drivetrainSubsystem.drivePO(0.1, 0.1);
