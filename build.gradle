@@ -66,8 +66,6 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     testImplementation 'junit:junit:4.13.1'
-
-    implementation "com.github.Oblarg:Oblog:4.0.9"
 }
 
 // Simulation configuration (e.g. environment variables).
